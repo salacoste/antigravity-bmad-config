@@ -1,0 +1,6 @@
+blank_issues_enabled: true
+contact_links:
+  - name: BMad Method (upstream)
+    url: https://github.com/bmadcode/bmad-method
+    about: Upstream docs, releases, and core behavior.
+

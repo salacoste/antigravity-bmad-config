@@ -1,0 +1,55 @@
+name: Bug report
+description: Report something broken or misleading in this template.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please include enough context to reproduce.
+  - type: input
+    id: antigravity_version
+    attributes:
+      label: Antigravity version (if applicable)
+      placeholder: e.g. 1.2.3
+    validations:
+      required: false
+  - type: input
+    id: bmad_method_version
+    attributes:
+      label: BMAD-METHOD version (if applicable)
+      placeholder: e.g. 0.9.0
+    validations:
+      required: false
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: What did you do?
+      placeholder: |
+        1. Clone repo
+        2. Run ...
+        3. Execute /pm ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / screenshots
+      description: Paste logs or attach screenshots if helpful.
+      render: shell
+    validations:
+      required: false
+

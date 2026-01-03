@@ -6,6 +6,8 @@
 
 Подходит, если вы хотите воспроизводимый поток: **PRD → Архитектура → Истории → Разработка → QA gate**.
 
+Это удобный проектный шаблон для автоматизации agentic workflow: роли PM/Architect/Dev/QA запускаются командами (`/pm`, `/architect`, `/dev`, `/qa`) и следуют конвенциям **BMAD-METHOD**.
+
 ## Зачем этот репозиторий
 
 - Быстро стартовать: `/pm` → структура и артефакты без “пустого листа”.
@@ -84,9 +86,3 @@ python3 .gemini/transpose_bmad.py
 - `.bmad-core/` — BMad core (agents/tasks/templates); нужен для workflows
 - `AGENTS.md` — agent memory для Codex (генерируется BMAD-METHOD)
 - `.gemini/transpose_bmad.py` — генерация workflows из `.bmad-core`
-
-## Маркетинг / SEO
-
-См. `MARKETING.md` — готовые тексты для GitHub “About”, список topics, и промты для картинок (баннер + social preview).
-
-Для GitHub Social Preview загрузите `assets/social-card.jpg` в настройках репозитория.

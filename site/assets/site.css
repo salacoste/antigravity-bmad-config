@@ -1,0 +1,218 @@
+/* ==========================================================================
+   site.css — site-local styles for the antigravity-bmad-config site.
+
+   Built ONLY on --tk-* design tokens (PRD addendum §A: rebrand by
+   overriding tokens, never by hard-coding values). Dark theme comes from
+   <html data-theme="dark"> + the vendored token layers; structural px and
+   this file's own layout constants are the only raw values.
+
+   Site-local patterns (code block, accordion, diagrams) also live here —
+   the kit deliberately ships none of them (addendum §E "kit gaps").
+   ========================================================================== */
+
+/* ── Base ─────────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--tk-font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--tk-color-text-primary);
+  background: var(--tk-color-surface-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+main { flex: 1 0 auto; }
+
+img,
+svg { max-width: 100%; height: auto; }
+
+a { color: var(--tk-color-link); }
+
+:focus-visible {
+  outline: 2px solid var(--tk-color-focus-ring);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--tk-color-focus-ring);
+  color: var(--tk-color-surface-base);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: var(--tk-space-8);
+  z-index: 100;
+  padding: var(--tk-space-8) var(--tk-space-16);
+  border-radius: var(--tk-radius-sm);
+  background: var(--tk-color-surface-muted);
+  color: var(--tk-color-text-primary);
+  text-decoration: none;
+}
+
+.skip-link:focus { left: var(--tk-space-8); }
+
+/* ── Layout ───────────────────────────────────────────────────────────── */
+
+.container {
+  max-width: var(--tk-space-container);
+  margin-inline: auto;
+  padding-inline: var(--tk-space-24);
+}
+
+main.page {
+  padding-block: var(--tk-space-48) var(--tk-space-96);
+}
+
+.section { margin-block: var(--tk-space-64); }
+
+.section-head { max-width: 72ch; margin-bottom: var(--tk-space-32); }
+
+.grid {
+  display: grid;
+  gap: var(--tk-space-grid-gap);
+}
+
+.grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+
+@media (max-width: 1023px) {
+  .grid.cols-3,
+  .grid.cols-2 { grid-template-columns: 1fr; }
+}
+
+/* ── Typography ───────────────────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--tk-font-heading);
+  color: var(--tk-color-text-primary);
+  margin: 0 0 var(--tk-space-16);
+}
+
+h1 {
+  font-size: var(--tk-text-heading-1-size);
+  font-weight: var(--tk-text-heading-1-weight);
+  line-height: var(--tk-text-heading-1-leading);
+}
+
+h2 {
+  font-size: var(--tk-text-heading-2-size);
+  font-weight: var(--tk-text-heading-2-weight);
+  line-height: var(--tk-text-heading-2-leading);
+}
+
+h3 {
+  font-size: var(--tk-text-heading-3-size);
+  font-weight: var(--tk-text-heading-3-weight);
+  line-height: var(--tk-text-heading-3-leading);
+}
+
+h4 {
+  font-size: var(--tk-text-heading-4-size);
+  font-weight: var(--tk-text-heading-4-weight);
+  line-height: var(--tk-text-heading-4-leading);
+}
+
+@media (max-width: 767px) {
+  h1 { font-size: var(--tk-text-heading-2-size); }
+  h2 { font-size: var(--tk-text-heading-3-size); }
+  h3 { font-size: var(--tk-text-heading-4-size); }
+}
+
+p { margin: 0 0 var(--tk-space-16); }
+
+.lead {
+  font-size: var(--tk-text-body-l-size);
+  line-height: 1.55;
+  color: var(--tk-color-text-secondary);
+  max-width: 68ch;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: var(--tk-space-12);
+  font-size: var(--tk-text-body-s-size, 13px);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tk-color-link);
+}
+
+code,
+kbd {
+  font-family: var(--tk-font-mono);
+  font-size: 0.92em;
+  padding: 0.15em 0.45em;
+  border-radius: var(--tk-radius-xs);
+  background: var(--tk-color-surface-field);
+  border: 1px solid var(--tk-color-border-default);
+  white-space: nowrap;
+}
+
+code.block { white-space: pre; }
+
+/* ── Shell chrome (navbar / footer) ───────────────────────────────────── */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tk-space-12);
+  text-decoration: none;
+  color: var(--tk-color-text-primary);
+  font-family: var(--tk-font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.brand img { width: 28px; height: 28px; display: block; }
+
+.brand b { color: var(--tk-color-link); font-weight: 700; }
+
+.nav-utilities { display: flex; align-items: center; gap: var(--tk-space-12); }
+
+.gh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tk-space-8);
+  min-height: 44px; /* §F touch target */
+  padding: var(--tk-space-8) var(--tk-space-16);
+  border: 1px solid var(--tk-color-border-strong);
+  border-radius: var(--tk-radius-full);
+  background: var(--tk-color-surface-muted);
+  color: var(--tk-color-text-primary);
+  font-size: var(--tk-text-body-s-size, 13px);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color var(--tk-motion-duration-fast) var(--tk-motion-curve-productive-standard);
+}
+
+.gh-btn:hover { background: var(--tk-color-surface-field); }
+
+.gh-count { display: block; }
+
+.site-footer { margin-top: auto; }
+
+.footer-legal {
+  margin: var(--tk-space-24) 0 0;
+  padding-top: var(--tk-space-16);
+  border-top: 1px solid var(--tk-color-border-default);
+  font-size: var(--tk-text-body-s-size, 13px);
+  color: var(--tk-color-text-muted);
+}
+
+.footer-legal a { color: var(--tk-color-link); }

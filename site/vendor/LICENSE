@@ -1,0 +1,54 @@
+MIT License
+
+Copyright (c) 2026 salacoste
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+Scope of this license
+
+The MIT grant above covers this repository's own code and documentation
+(the workspace packages, tests, tooling and docs sources).
+
+The following files are licensed separately and are NOT covered by this
+license — nothing in the MIT grant extends to them:
+
+1. Bundled fonts — packages/tokens/fonts/ (DaytonaSans-*.woff2,
+   DaytonaPragma-*.woff2, daytona.css). These are separately licensed assets
+   distributed under usage + renaming license agreements held by the
+   maintainer with Monotype Imaging Inc. and ParaType. The terms governing
+   these files are stated in packages/tokens/fonts/LICENSE-FONTS.md.
+
+2. Vendored transitions.dev recipes — transitions/t-*.css and
+   transitions/_root.css. These files are vendored, unmodified, from the
+   transitions.dev free recipes pack and remain subject to the upstream
+   usage terms (https://transitions.dev/terms.html): every recipe — free or
+   Pro — may be used in unlimited personal and commercial projects, modified
+   freely and shipped as part of your product; redistributing the collection
+   itself, or a substantial part of it, as a library/template pack is not
+   permitted. These files are repository-local source material and are not
+   part of any published npm package.
+
+3. Protect Auto reference assets — packages/docs/public/brand/. These bounded
+   local Storybook copies came from the public Protect Auto site under the
+   user's authorization for this adaptation. They are not covered by the MIT
+   grant above and are not part of any published npm package. Exact source
+   URLs, dimensions and SHA-256 hashes are recorded in
+   docs/SOURCE-PROVENANCE.md.

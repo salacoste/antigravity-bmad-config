@@ -142,15 +142,6 @@ p { margin: 0 0 var(--tk-space-16); }
   max-width: 68ch;
 }
 
-.eyebrow {
-  display: inline-block;
-  margin-bottom: var(--tk-space-12);
-  font-size: var(--tk-text-body-s-size, 13px);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--tk-color-link);
-}
 
 code,
 kbd {

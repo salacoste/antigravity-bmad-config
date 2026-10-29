@@ -138,7 +138,6 @@
         padding: var(--tk-space-16) var(--tk-space-20);
         background: var(--tk-color-tint-bluegray);
         border: 1px solid var(--tk-color-border-default);
-        border-left: 3px solid var(--tk-color-link);
         border-radius: var(--tk-radius-md);
       }
 
@@ -158,7 +157,6 @@
     </style>
 
     <div class="container">
-      <span class="eyebrow">Presets &amp; customization</span>
       <h1>Presets that survive updates</h1>
       <p class="lead">Presets write to <code>_bmad/custom/</code> — the one BMad-owned
         directory the installer never touches. Apply one with a single command,
@@ -167,7 +165,6 @@
       <!-- FR-7.1 · Team layer -->
       <section class="section" aria-labelledby="team-layer-title">
         <div class="section-head">
-          <span class="eyebrow">Team layer</span>
           <h2 id="team-layer-title">The team layer: <code>_bmad/custom/</code></h2>
           <p class="lead">Every BMad install reserves one directory for your team.
             The installer regenerates everything around it on update — and never
@@ -202,7 +199,6 @@
       <!-- FR-7.2 · Preset cards -->
       <section class="section" aria-labelledby="presets-title">
         <div class="section-head">
-          <span class="eyebrow">Built-in presets</span>
           <h2 id="presets-title">Two presets, one mechanism</h2>
           <p class="lead"><code>english</code> is a documented near-no-op that shows
             the mechanism. <code>russian</code> puts it to work: split languages plus
@@ -257,7 +253,6 @@ document_output_language = "English"</code></pre>
       <!-- FR-7.3 · Config keys reference -->
       <section class="section" aria-labelledby="keys-title">
         <div class="section-head">
-          <span class="eyebrow">Reference</span>
           <h2 id="keys-title">Config keys reference</h2>
           <p class="lead">Everything a preset can set, from the BMad v6.12 config
             schema. Set these in your preset's <code>_bmad/custom/config.toml</code>;
@@ -273,7 +268,6 @@ document_output_language = "English"</code></pre>
       <!-- FR-7.4 · Write your own preset -->
       <section class="section" id="write-your-own" aria-labelledby="write-title">
         <div class="section-head">
-          <span class="eyebrow">Recipe</span>
           <h2 id="write-title">Write your own preset</h2>
           <p class="lead">Copy, edit, apply — the same mechanism the built-ins use.
             Commit the result and your whole team shares the configuration.</p>

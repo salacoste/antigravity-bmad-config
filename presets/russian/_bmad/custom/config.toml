@@ -1,0 +1,18 @@
+# preset: antigravity-bmad-config/russian
+#
+# Командный слой конфигурации BMAD — установщик BMAD его не трогает.
+# Применяется командой ./setup.sh russian.
+# Разговор с агентами — на русском; артефакты (PRD, architecture,
+# stories) — на английском, чтобы работать в международной команде.
+
+[core]
+communication_language = "Russian"
+document_output_language = "English"
+
+# Примеры (раскомментируйте при необходимости):
+#
+# [core]
+# user_name = "Ада"
+#
+# [modules.bmm]
+# user_skill_level = "intermediate"

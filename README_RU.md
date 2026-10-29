@@ -2,7 +2,7 @@
 
 # Antigravity × BMad Method — шаблон конфигурации
 
-Язык: русский • `README.md` (English)
+Язык: русский • `README.md` (English) • [Сайт](https://salacoste.github.io/antigravity-bmad-config/)
 
 Готовый к клонированию шаблон, который подключает **BMad Method** к
 **Google Antigravity** нативным способом: **пиннированная** установка

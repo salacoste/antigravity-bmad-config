@@ -241,11 +241,21 @@ code.block { white-space: pre; }
   overflow-x: auto;
 }
 
-.code-block pre .cm { color: var(--tk-color-text-muted); } /* shell comments */
+.code-block pre .cm { color: var(--tk-color-text-secondary); } /* shell comments (muted fails 4.5:1 on the field composite) */
 
 /* Long commands scroll inside the block, never widen the page
    (overrides the inline-code `nowrap`). */
 .code-block pre code { white-space: pre; }
+
+/* Long inline paths (nowrap chips) wrap on narrow screens instead of
+   widening the page; block code keeps its pre scroll via the rule above. */
+@media (max-width: 767px) {
+  code,
+  kbd {
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+}
 
 .copy-btn {
   position: absolute;
@@ -480,6 +490,7 @@ code.block { white-space: pre; }
   }
 
   .loop-node { margin: 4px 0 0; }
+}
 
 /* ── Layer diagram (FR-5.1) — vertical stack, static, token-driven ────── */
 
@@ -535,5 +546,4 @@ code.block { white-space: pre; }
   border: 5px solid transparent;
   border-top-color: var(--tk-color-border-strong);
   border-bottom: 0;
-}
 }

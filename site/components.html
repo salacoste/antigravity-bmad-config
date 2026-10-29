@@ -4,16 +4,76 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Components — antigravity-bmad-config</title>
-  <meta name="description" content="What antigravity-bmad-config adds on top of pinned upstream BMad: the orchestrator plugin, presets, and the pin that protects you.">
+  <meta name="description" content="Inside the template: the /bmad-orchestrate plugin and its two rules, the 29 BMad skills it routes across, and the .bmad-version pin that keeps upstream from moving under you.">
   <meta property="og:title" content="Components — antigravity-bmad-config">
-  <meta property="og:description" content="What antigravity-bmad-config adds on top of pinned upstream BMad: the orchestrator plugin, presets, and the pin that protects you.">
+  <meta property="og:description" content="Inside the template: the /bmad-orchestrate plugin and its two rules, the 29 BMad skills it routes across, and the .bmad-version pin that keeps upstream from moving under you.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://salacoste.github.io/antigravity-bmad-config/components.html">
+  <meta property="og:image" content="https://salacoste.github.io/antigravity-bmad-config/assets/social-card.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="vendor/pillkit-tokens/tokens.css">
   <link rel="stylesheet" href="assets/site.css">
   <script type="module" src="vendor/pillkit-components/tk-components.js"></script>
   <script type="module" src="assets/chrome.js"></script>
+  <script type="module" src="assets/site.js"></script>
+  <style>
+    /* Page-local (components.html only): skill-catalog cards and accordion
+       rule rows. Tokens for every color/size — no raw values (addendum §A). */
+
+    .skill-panel h3 { margin-bottom: var(--tk-space-8); }
+
+    .skill-panel .panel-note {
+      margin: 0 0 var(--tk-space-24);
+      color: var(--tk-color-text-secondary);
+    }
+
+    .skill-card {
+      display: flex;
+      flex-direction: column;
+      gap: var(--tk-space-8);
+      padding: var(--tk-space-16) var(--tk-space-20);
+      background: var(--tk-color-surface-muted);
+      border: 1px solid var(--tk-color-border-default);
+      border-radius: var(--tk-radius-md);
+    }
+
+    .skill-cmd {
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--tk-space-8);
+    }
+
+    .skill-desc {
+      margin: 0;
+      font-size: var(--tk-text-body-s-size, 13px);
+      line-height: 1.55;
+      color: var(--tk-color-text-secondary);
+    }
+
+    .persona-name {
+      font-size: var(--tk-text-body-s-size, 13px);
+      font-weight: 600;
+      color: var(--tk-color-link);
+    }
+
+    /* Rule accordions: summary = code filename + the one-line rule;
+       body font for the sentence, heading look stays on the file name. */
+    .accordion summary .rule-summary {
+      display: grid;
+      gap: var(--tk-space-4);
+      font-family: var(--tk-font-body);
+      font-weight: 400;
+    }
+
+    .accordion summary .rule-line {
+      font-size: var(--tk-text-body-s-size, 13px);
+      line-height: 1.55;
+      color: var(--tk-color-text-secondary);
+    }
+  </style>
 </head>
 <body data-page="components">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -36,10 +96,317 @@
     <div class="container">
       <span class="eyebrow">Inside the template</span>
       <h1>What the template adds</h1>
-      <p class="lead">A thin layer over pinned upstream BMad — an orchestrator skill, two rules, presets, and nothing you can't inspect.</p>
-      <!-- W3 fills: FR-5.1 layer diagram · FR-5.2 orchestrator section ·
-           FR-5.3 skill catalog (29 skills, 4 groups) · FR-5.4 pin explainer -->
+      <p class="lead">A thin layer over pinned upstream BMad: one orchestrator skill, two rules,
+        twenty-nine skills it routes across, and a version pin that decides when any of it changes.</p>
+
+      <!-- FR-5.1 Layer diagram -->
+      <section class="section" aria-labelledby="stack-title">
+        <div class="section-head">
+          <span class="eyebrow">The stack</span>
+          <h2 id="stack-title">Three layers, one of them yours</h2>
+          <p class="lead">Everything below the middle band is installed by <code>./setup.sh</code>
+            from the pinned version — the BMad runtime and all 29 skills — and belongs to the
+            installer, never to you. The middle band is what this repo commits: the orchestrator
+            plugin, its two rules, and the presets. The artifacts everyone produces land in
+            <code>_bmad-output/</code>, your project's working data.</p>
+        </div>
+        <div class="layer-stack" role="img" aria-label="Three stacked layers: Google Antigravity, the IDE surface, on top; the antigravity-bmad plugin and presets — this template — in the middle; and the pinned BMad runtime 6.12.4 at the bottom.">
+          <div class="layer"><span class="layer-name">Google Antigravity</span><span class="layer-note">IDE surface — consumes .agent/ + .agents/ targets</span></div>
+          <div class="layer-connector" aria-hidden="true"></div>
+          <div class="layer is-template"><span class="layer-name">antigravity-bmad plugin + presets</span><span class="layer-note">this template — the thin layer</span></div>
+          <div class="layer-connector" aria-hidden="true"></div>
+          <div class="layer"><span class="layer-name">BMad runtime — pinned 6.12.4</span><span class="layer-note">_bmad/ · 29 skills · installer-owned</span></div>
+        </div>
+      </section>
+
+      <!-- FR-5.2 Orchestrator -->
+      <section class="section" aria-labelledby="orchestrator-title">
+        <div class="section-head">
+          <span class="eyebrow">Orchestrator</span>
+          <h2 id="orchestrator-title">The orchestrator: /bmad-orchestrate</h2>
+          <p class="lead">One skill is the front door for every BMad session.
+            <code>/bmad-orchestrate</code> works out where your project is, then routes you to
+            the right skill — it never does a persona's job itself.</p>
+        </div>
+
+        <h3>What it does</h3>
+        <ul>
+          <li>Single entry point that routes work across the BMad skills this template installs.</li>
+          <li>Detects which planning artifacts already exist and classifies your state — an empty
+            project gets the Day One path; from there it's
+            brief → PRD → architecture → spec/stories → sprint → build → review.</li>
+          <li>Sequences Clarify → Plan → Build → Learn with explicit
+            handoffs: a short <em>Handoff</em> receipt after each phase records what was completed,
+            what's next, and any open questions.</li>
+          <li>Multi-option decisions go through the <code>ask_question</code> tool with concrete
+            options — no free-text guessing.</li>
+          <li>Never edits <code>_bmad/</code> except <code>_bmad/custom/</code>.</li>
+        </ul>
+
+        <h3>Ground rules</h3>
+        <div class="grid cols-2">
+          <tk-promo-card variant="charcoal" heading="Dispatch, don't impersonate"
+            description="Persona work belongs to the bmad-agent-* skills. The orchestrator invokes them and tracks their artifacts — it never improvises a persona's content itself.">
+          </tk-promo-card>
+          <tk-promo-card variant="charcoal" heading="Artifacts are the state"
+            description="Everything lives under _bmad-output/. Where you are is decided by reading files on disk, never by memory of the conversation.">
+          </tk-promo-card>
+        </div>
+
+        <h3>The two rules</h3>
+        <details class="accordion">
+          <summary>
+            <span class="rule-summary">
+              <span class="rule-name"><code>bmad-workflow.md</code></span>
+              <span class="rule-line">Always on: routes BMad work to the installed <code>bmad-*</code>
+                skills; never edits <code>_bmad/</code> outside <code>_bmad/custom/</code>.</span>
+            </span>
+            <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </summary>
+          <div class="accordion-body">
+            <p>The rest of <code>_bmad/</code> is installer-managed — regenerated by
+              <code>./setup.sh</code> from the pinned version. Multi-option decisions during BMad
+              work go through <code>ask_question</code>, artifacts stay under
+              <code>_bmad-output/</code>, and when no skill obviously fits, <code>bmad-help</code>
+              does.</p>
+          </div>
+        </details>
+        <details class="accordion">
+          <summary>
+            <span class="rule-summary">
+              <span class="rule-name"><code>bmad-artifacts.md</code></span>
+              <span class="rule-line">Planning artifacts under <code>_bmad-output/</code> are changed
+                through their owning skill; never deleted to "clean up."</span>
+            </span>
+            <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </summary>
+          <div class="accordion-body">
+            <p>Route changes through the skill that owns the document; for mid-implementation
+              course changes use <code>bmad-correct-course</code>. Story files keep their status
+              current while you implement — review, retrospective, and sprint planning all read
+              that state.</p>
+          </div>
+        </details>
+        <p>It's all plain files — browse the plugin:
+          <a href="https://github.com/salacoste/antigravity-bmad-config/tree/main/.agents/plugins/antigravity-bmad" rel="noopener"><code>.agents/plugins/antigravity-bmad/</code></a></p>
+      </section>
+
+      <!-- FR-5.3 Skill catalog -->
+      <section class="section" aria-labelledby="catalog-title">
+        <div class="section-head">
+          <span class="eyebrow">Skill catalog</span>
+          <h2 id="catalog-title">The skill catalog: 29 skills, four groups</h2>
+          <p class="lead">BMad&nbsp;6.12.4 ships 29 skills, all installed by <code>./setup.sh</code>
+            and invoked as slash commands in Antigravity: the personas you talk to, the planning
+            skills, the shipping skills, and an always-useful core.</p>
+        </div>
+
+        <tk-tabs class="skill-groups">
+          <div slot="tab-0" class="skill-panel">
+            <h3>Personas</h3>
+            <p class="panel-note">Five persona agents — ask for them by name.</p>
+            <div class="grid cols-3">
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-agent-analyst</code><span class="persona-name">Mary</span></p>
+                <p class="skill-desc">Business analyst for market research, competitive analysis, and requirements.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-agent-pm</code><span class="persona-name">John</span></p>
+                <p class="skill-desc">Product manager for PRD creation and requirements discovery.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-agent-ux-designer</code><span class="persona-name">Sally</span></p>
+                <p class="skill-desc">UX designer and UI specialist.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-agent-architect</code><span class="persona-name">Winston</span></p>
+                <p class="skill-desc">System architect and technical design leader.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-agent-dev</code><span class="persona-name">Amelia</span></p>
+                <p class="skill-desc">Senior software engineer who implements stories and code changes.</p>
+              </div>
+            </div>
+          </div>
+
+          <div slot="tab-1" class="skill-panel">
+            <h3>Plan</h3>
+            <p class="panel-note">From a rough idea to an implementation-ready plan — plus the
+              project context that keeps agents oriented in your repo.</p>
+            <div class="grid cols-3">
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-product-brief</code></p>
+                <p class="skill-desc">A guided conversation that captures your product idea in a brief.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-prfaq</code></p>
+                <p class="skill-desc">Amazon's Working Backwards method: write the press release for the finished product first.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-prd</code></p>
+                <p class="skill-desc">Create a new PRD through guided discovery, update an existing one when plans change.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-ux</code></p>
+                <p class="skill-desc">Capture UX decisions into design and experience documents.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-architecture</code></p>
+                <p class="skill-desc">Records the architecture decisions that keep features, epics, and stories consistent.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-spec</code></p>
+                <p class="skill-desc">Condense any input into a short SPEC.md plus supporting files that later work builds from.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-create-epics-and-stories</code></p>
+                <p class="skill-desc">Break the PRD and architecture into epics and user stories with acceptance criteria.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-sprint-planning</code></p>
+                <p class="skill-desc">Checks planning is complete enough to implement (PASS/CONCERNS/FAIL), then generates the sprint status file.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-project-context</code></p>
+                <p class="skill-desc">Set up or refresh a repo's agent instructions so AI agents work well in it.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-brainstorming</code></p>
+                <p class="skill-desc">Guided idea-generation session using one or more brainstorming techniques.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-forge-idea</code></p>
+                <p class="skill-desc">Test an idea through probing questions from different personas until you can act on it or drop it.</p>
+              </div>
+            </div>
+          </div>
+
+          <div slot="tab-2" class="skill-panel">
+            <h3>Ship</h3>
+            <p class="panel-note">Build, review, and everything around getting work out the door.</p>
+            <div class="grid cols-3">
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-build</code></p>
+                <p class="skill-desc">The standard implementation flow: clarify intent, plan, implement, review, and present.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-build-auto</code></p>
+                <p class="skill-desc">One iteration of an unattended development loop.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-code-review</code></p>
+                <p class="skill-desc">Ad hoc review of any code change. An optional extra check after Build's built-in review.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-correct-course</code></p>
+                <p class="skill-desc">Assess a significant mid-sprint change. May recommend starting over, updating the PRD, or correcting stories.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-qa-generate-e2e-tests</code></p>
+                <p class="skill-desc">Generate automated API and end-to-end tests for implemented code.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-retrospective</code></p>
+                <p class="skill-desc">Optional at the end of an epic: review the completed work and lessons learned.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-walkthrough</code></p>
+                <p class="skill-desc">Guided walkthrough of a change — use it for human review of commits, branches, or PRs.</p>
+              </div>
+            </div>
+          </div>
+
+          <div slot="tab-3" class="skill-panel">
+            <h3>Core</h3>
+            <p class="panel-note">Orientation, review, research, elicitation, and customization —
+              useful at any phase.</p>
+            <div class="grid cols-3">
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-help</code></p>
+                <p class="skill-desc">Upstream orientation skill — the menu of installed BMad skills; ask it when unsure which one fits.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-review</code></p>
+                <p class="skill-desc">Review anything before it ships; applies whichever installed review lenses fit the content.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-deep-recon</code></p>
+                <p class="skill-desc">Research a topic to support a decision and turn it into a summary with cited sources.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-advanced-elicitation</code></p>
+                <p class="skill-desc">Use at any checkpoint to push a just-produced draft, section, or plan past its first version.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-customize</code></p>
+                <p class="skill-desc">Customize how an agent or workflow behaves: add persistent facts, swap templates, insert activation hooks.</p>
+              </div>
+              <div class="skill-card">
+                <p class="skill-cmd"><code>/bmad-party-mode</code></p>
+                <p class="skill-desc">Orchestrate multi-agent discussions when you need multiple perspectives or want agents to collaborate.</p>
+              </div>
+            </div>
+          </div>
+        </tk-tabs>
+
+        <p>Descriptions: upstream BMad docs —
+          <a href="https://bmadcode.com" rel="noopener">bmadcode.com</a> and
+          <a href="https://docs.bmad-method.org" rel="noopener">docs.bmad-method.org</a>.</p>
+      </section>
+
+      <!-- FR-5.4 Pin explainer -->
+      <section class="section" aria-labelledby="pin-title">
+        <div class="section-head">
+          <span class="eyebrow">The pin</span>
+          <h2 id="pin-title">The pin: .bmad-version</h2>
+          <p class="lead">The exact BMad version — <code>6.12.4</code> — is recorded in
+            <code>.bmad-version</code>, the single source of truth. <code>setup.sh</code>, the
+            Makefile, and CI all read it, so a BMad release can't change your project under you.</p>
+        </div>
+
+        <h3>How updates happen</h3>
+        <p>Updates are deliberate — three make targets, run on demand:</p>
+        <div class="code-strip">
+          <figure class="code-block">
+            <pre><code>make update <span class="cm"># re-run setup — installer detects existing install</span></code></pre>
+            <button class="copy-btn" type="button" aria-label="Copy make update command"></button>
+          </figure>
+          <figure class="code-block">
+            <pre><code>make verify-pin <span class="cm"># npm still serves the pinned version?</span></code></pre>
+            <button class="copy-btn" type="button" aria-label="Copy make verify-pin command"></button>
+          </figure>
+          <figure class="code-block">
+            <pre><code>make smoke-test <span class="cm"># fresh-clone simulation + layout assertions</span></code></pre>
+            <button class="copy-btn" type="button" aria-label="Copy make smoke-test command"></button>
+          </figure>
+        </div>
+
+        <h3>Changing the pin</h3>
+        <ol>
+          <li>Edit <code>.bmad-version</code> to the version you want.</li>
+          <li>Run <code>make smoke-test</code>.</li>
+          <li>Fix any breakage it reports.</li>
+        </ol>
+        <p>CI runs the same checks on every push — and weekly, to catch an upstream delisting
+          even when nothing changed on your side.</p>
+        <p>BMad v7 is alpha and not npm-pinnable — the template stays on v6 until v7 is stable,
+          and avoids the v6 shim skill names v7 removed, like <code>bmad-create-story</code>.</p>
+      </section>
     </div>
+
+    <script type="module">
+      // Skill-group tabs: array props need post-upgrade assignment (Lit's
+      // constructor field init wipes pre-upgrade sets) — the same
+      // whenDefined pattern chrome.js uses for the navbar.
+      customElements.whenDefined('tk-tabs').then(() => {
+        document.querySelector('tk-tabs.skill-groups').tabs = [
+          { value: 'personas', label: 'Personas' },
+          { value: 'plan', label: 'Plan', badge: 11 },
+          { value: 'ship', label: 'Ship', badge: 7 },
+          { value: 'core', label: 'Core', badge: 6 },
+        ];
+      });
+    </script>
   </main>
 
   <tk-footer class="site-footer"></tk-footer>

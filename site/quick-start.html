@@ -9,11 +9,79 @@
   <meta property="og:description" content="From a clean clone to your first /bmad-orchestrate session in Antigravity: prerequisites, three commands, and what lands on disk.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://salacoste.github.io/antigravity-bmad-config/quick-start.html">
+  <meta property="og:image" content="https://salacoste.github.io/antigravity-bmad-config/assets/social-card.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="vendor/pillkit-tokens/tokens.css">
   <link rel="stylesheet" href="assets/site.css">
   <script type="module" src="vendor/pillkit-components/tk-components.js"></script>
   <script type="module" src="assets/chrome.js"></script>
+  <!-- Copy buttons (FR-4.2 / FR-4.4) are wired by site.js — same as Home. -->
+  <script type="module" src="assets/site.js"></script>
+  <style>
+    /* Quick Start page-local layout — tokens only (raw px = structure). */
+
+    /* Numbered setup steps (FR-4.2): counter badges + a rail that ties them
+       into one sequence. Badges are 40px (structure), colors via tokens. */
+    .qs-steps {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      counter-reset: qs;
+      display: grid;
+      gap: var(--tk-space-48);
+    }
+
+    .qs-step { position: relative; padding-left: 72px; }
+
+    .qs-step::before {
+      content: counter(qs);
+      counter-increment: qs;
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--tk-radius-full);
+      background: var(--tk-color-surface-field);
+      border: 1px solid var(--tk-color-border-strong);
+      color: var(--tk-color-link);
+      font-family: var(--tk-font-heading);
+      font-size: var(--tk-text-body-l-size, 17px);
+      font-weight: 700;
+    }
+
+    /* Rail from a badge to the next step — exactly one grid gap long. */
+    .qs-step::after {
+      content: "";
+      position: absolute;
+      left: 19px;
+      top: 48px;
+      bottom: calc(-1 * var(--tk-space-48));
+      width: 2px;
+      background: var(--tk-color-border-default);
+    }
+
+    .qs-step:last-child::after { display: none; }
+
+    .qs-step h3 { margin-bottom: var(--tk-space-8); }
+
+    .qs-step .code-strip { margin-top: var(--tk-space-16); }
+
+    @media (max-width: 767px) {
+      .qs-step { padding-left: 60px; }
+      .qs-step::before { width: 36px; height: 36px; }
+      .qs-step::after { left: 17px; top: 42px; }
+    }
+
+    /* Long quoted tool output (error / warning strings) wraps instead of
+       overflowing the accordion. Shell commands inside .code-block pre keep
+       `white-space: pre` — that frozen rule outranks this one. */
+    .qs-wrap { white-space: normal; }
+  </style>
 </head>
 <body data-page="quick-start">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -37,9 +105,167 @@
       <span class="eyebrow">Get started</span>
       <h1>From clone to first BMad session</h1>
       <p class="lead">Three commands and one Antigravity window. Every command on this page is exactly what the repository runs.</p>
-      <!-- W3 fills: FR-4.1 prerequisites card · FR-4.2 numbered steps with
-           copyable commands · FR-4.3 installed mini-tree · FR-4.4
-           troubleshooting accordion · FR-4.5 next-steps card -->
+
+      <!-- FR-4.1 Prerequisites -->
+      <section class="section" aria-labelledby="qs-prereq-title">
+        <div class="section-head">
+          <span class="eyebrow">Prerequisites</span>
+          <h2 id="qs-prereq-title">Before you start</h2>
+        </div>
+        <div class="grid cols-3">
+          <tk-service-card heading="Google Antigravity">
+            <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+              <circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none"/>
+              <ellipse cx="12" cy="12" rx="9" ry="3.75" transform="rotate(-24 12 12)"/>
+            </svg>
+            <p slot="description">Any surface works: the 2.0 app, the IDE extension, or the <code>agy</code> CLI.</p>
+          </tk-service-card>
+          <tk-service-card heading="Node ≥ 20.12">
+            <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 4.5 19 8.5v7l-7 4-7-4v-7Z"/>
+              <path d="M12 11.5 19 8.5M12 11.5 5 8.5M12 11.5v8"/>
+            </svg>
+            <p slot="description">The hard requirement — <code>setup.sh</code> exits with an error on anything older.</p>
+          </tk-service-card>
+          <tk-service-card heading="uv + Python 3.11">
+            <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 4.5V14m0 0 4-4m-4 4-4-4"/>
+              <path d="M4.5 19.5h15"/>
+            </svg>
+            <p slot="description">Optional: without it BMad installs, but <code>bmad-build</code> / <code>bmad-build-auto</code> will halt — <code>setup.sh</code> warns, it doesn't fail.</p>
+            <div slot="actions"><tk-link href="https://docs.astral.sh/uv/" variant="standalone">Install uv →</tk-link></div>
+          </tk-service-card>
+        </div>
+      </section>
+
+      <!-- FR-4.2 Numbered steps with copyable commands -->
+      <section class="section" aria-labelledby="qs-steps-title">
+        <div class="section-head">
+          <span class="eyebrow">Setup</span>
+          <h2 id="qs-steps-title">Four steps to a working install</h2>
+        </div>
+        <ol class="qs-steps">
+          <li class="qs-step">
+            <h3>Clone the template and reset git</h3>
+            <p>You get the whole template under <code>my-project</code>, with a fresh git history that starts with you.</p>
+            <div class="code-strip">
+              <figure class="code-block">
+                <pre><code>git clone https://github.com/salacoste/antigravity-bmad-config.git my-project</code></pre>
+                <button class="copy-btn" type="button" aria-label="Copy clone command"></button>
+              </figure>
+              <figure class="code-block">
+                <pre><code>cd my-project &amp;&amp; rm -rf .git &amp;&amp; git init</code></pre>
+                <button class="copy-btn" type="button" aria-label="Copy reset command"></button>
+              </figure>
+            </div>
+          </li>
+          <li class="qs-step">
+            <h3>Run setup</h3>
+            <p>Installs <code>bmad-method@6.12.4</code> — modules <code>bmm</code>, tools <code>antigravity</code> and <code>antigravity-cli</code> — and applies the preset to <code>_bmad/custom/</code>. It's idempotent: safe to re-run any time to restore or update.</p>
+            <div class="code-strip">
+              <figure class="code-block">
+                <pre><code>./setup.sh <span class="cm"># or: ./setup.sh russian</span></code></pre>
+                <button class="copy-btn" type="button" aria-label="Copy setup command"></button>
+              </figure>
+            </div>
+          </li>
+          <li class="qs-step">
+            <h3>Open the folder in Antigravity</h3>
+            <p>App, IDE extension, or <code>agy</code> — any surface. The plugin in <code>.agents/plugins/antigravity-bmad/</code> loads automatically once the folder is open.</p>
+          </li>
+          <li class="qs-step">
+            <h3>Start the loop</h3>
+            <p>Run <code>/bmad-orchestrate</code> — the template's entry point — or <code>/bmad-help</code> for upstream orientation. Planning artifacts land in <code>_bmad-output/</code>.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- FR-4.3 What got installed -->
+      <section class="section" aria-labelledby="qs-tree-title">
+        <div class="section-head">
+          <span class="eyebrow">On disk</span>
+          <h2 id="qs-tree-title">What got installed</h2>
+          <p class="lead">After a clean setup, <code>my-project/</code> looks like this:</p>
+        </div>
+        <pre class="tree">my-project/
+├─ <span class="hl">_bmad/</span>                         <span class="dim">← pinned BMad runtime (6.12.4)</span>
+│  └─ <span class="hl">custom/</span>                     <span class="dim">← team layer: presets land here</span>
+├─ <span class="hl">.agent/skills/</span>                 <span class="dim">← 29 BMad skills (app target)</span>
+├─ <span class="hl">.agents/skills/</span>                <span class="dim">← 29 BMad skills (CLI target)</span>
+│  └─ <span class="hl">plugins/antigravity-bmad/</span>   <span class="dim">← orchestrator plugin</span>
+└─ <span class="hl">_bmad-output/</span>                  <span class="dim">← your planning artifacts</span></pre>
+      </section>
+
+      <!-- FR-4.4 Troubleshooting -->
+      <section class="section" aria-labelledby="qs-trouble-title">
+        <div class="section-head">
+          <span class="eyebrow">Troubleshooting</span>
+          <h2 id="qs-trouble-title">When something goes sideways</h2>
+        </div>
+        <details class="accordion">
+          <summary>Node too old&nbsp;<svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="accordion-body">
+            <p><code>setup.sh</code> prints <code class="qs-wrap">ERROR: Node &gt;= 20.12 required (found: vX.Y.Z)</code> and exits. Upgrade Node — <code>nvm install 20</code> works — then re-run <code>./setup.sh</code>.</p>
+          </div>
+        </details>
+        <details class="accordion">
+          <summary>uv not found&nbsp;<svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="accordion-body">
+            <p>A warning, not a failure: <code class="qs-wrap">uv not found — BMAD installs, but bmad-build / bmad-build-auto will halt.</code> Install uv with Python 3.11+ from <a href="https://docs.astral.sh/uv/">docs.astral.sh/uv</a> — no re-setup needed.</p>
+          </div>
+        </details>
+        <details class="accordion">
+          <summary>command not found: /bmad-orchestrate&nbsp;<svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="accordion-body">
+            <p>The plugin lives in <code>.agents/plugins/antigravity-bmad/</code> and loads when the project folder is opened in Antigravity. Reopen the folder — or restart the window — and check that plugins are enabled: <a href="https://antigravity.google/docs/plugins/">Antigravity plugin docs</a>.</p>
+          </div>
+        </details>
+        <details class="accordion">
+          <summary>Adding to an existing project instead&nbsp;<svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></summary>
+          <div class="accordion-body">
+            <p>You don't need the whole template: copy <code>.agents/plugins/antigravity-bmad/</code> into your project, then run the pinned installer:</p>
+            <figure class="code-block">
+              <pre><code>npx -y bmad-method@6.12.4 install --yes --modules bmm --tools antigravity,antigravity-cli</code></pre>
+              <button class="copy-btn" type="button" aria-label="Copy pinned installer command"></button>
+            </figure>
+            <p>Details in the <a href="https://github.com/salacoste/antigravity-bmad-config#adding-to-an-existing-project-without-the-template">README section</a>.</p>
+          </div>
+        </details>
+      </section>
+
+      <!-- FR-4.5 Next steps -->
+      <section class="section" aria-labelledby="qs-next-title">
+        <div class="section-head">
+          <span class="eyebrow">Next steps</span>
+          <h2 id="qs-next-title">Where to go from here</h2>
+        </div>
+        <div class="grid cols-3">
+          <tk-service-card heading="Get oriented">
+            <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="8.5"/>
+              <path d="M15 9l-2 4-4 2 2-4z" fill="currentColor" stroke="none"/>
+            </svg>
+            <p slot="description">Run <code>/bmad-help</code> — the upstream orientation skill — to see everything the install gives you.</p>
+          </tk-service-card>
+          <tk-service-card heading="Tune your presets">
+            <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 4.5 20 9l-8 4.5L4 9Z"/>
+              <path d="m6 13 6 3.5 6-3.5M6 16.5l6 3.5 6-3.5"/>
+            </svg>
+            <p slot="description">Presets that survive updates — see how the team layer lands in <code>_bmad/custom/</code> and how to write your own.</p>
+            <div slot="actions"><tk-link href="./presets.html" variant="standalone">Presets →</tk-link></div>
+          </tk-service-card>
+          <tk-service-card heading="Get involved">
+            <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="8.5"/>
+              <path d="M12 8.5v7M8.5 12h7"/>
+            </svg>
+            <p slot="description">Found a gap or want to improve the template? The guide covers issues, discussions, and PRs.</p>
+            <div slot="actions"><tk-link href="https://github.com/salacoste/antigravity-bmad-config/blob/main/CONTRIBUTING.md" variant="standalone">Contributing →</tk-link></div>
+          </tk-service-card>
+        </div>
+      </section>
+
     </div>
   </main>
 

@@ -2,7 +2,7 @@
 
 # Antigravity × BMad Method — Config Template
 
-Language: English • `README_RU.md`
+Language: English • `README_RU.md` • [Website](https://salacoste.github.io/antigravity-bmad-config/)
 
 A ready-to-clone template that wires the **BMad Method** into **Google
 Antigravity** the native way: a **pinned** BMAD install with Antigravity

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Migration — antigravity-bmad-config</title>
+  <meta name="description" content="Antigravity sunset workflows on 2026-10-19 and BMad 6 dropped .bmad-core — the v1 stack is dead. Three documented steps to a pinned v2 install.">
+  <meta property="og:title" content="Migration — antigravity-bmad-config">
+  <meta property="og:description" content="Antigravity sunset workflows on 2026-10-19 and BMad 6 dropped .bmad-core — the v1 stack is dead. Three documented steps to a pinned v2 install.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://salacoste.github.io/antigravity-bmad-config/migration.html">
+  <meta property="og:image" content="https://salacoste.github.io/antigravity-bmad-config/assets/social-card.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="vendor/pillkit-tokens/tokens.css">
+  <link rel="stylesheet" href="assets/site.css">
+  <script type="module" src="vendor/pillkit-components/tk-components.js"></script>
+  <script type="module" src="assets/chrome.js"></script>
+  <script type="module" src="assets/site.js"></script>
+</head>
+<body data-page="migration">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <tk-navbar class="site-navbar" sticky burger-label="Menu">
+    <a slot="logo" class="brand" href="./index.html#why-title">
+      <img src="assets/wordmark.svg" alt="" width="28" height="28">
+      <span class="brand-name">antigravity<b>&hairsp;&middot;&hairsp;bmad</b></span>
+    </a>
+    <div slot="utilities" class="nav-utilities">
+      <a class="gh-btn" href="https://github.com/salacoste/antigravity-bmad-config" rel="noopener">
+        <svg class="gh-mark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        <span>Star</span>
+        <img class="gh-count" src="https://img.shields.io/github/stars/salacoste/antigravity-bmad-config?style=flat&amp;label=&amp;color=8CB8FF" alt="" width="28" height="14" decoding="async">
+      </a>
+    </div>
+  </tk-navbar>
+
+  <main id="main" class="page">
+    <style>
+      /* Page-local (Migration): numbered steps + reassurance panels.
+         Built on --tk-* tokens; raw values below are structural px only. */
+      .mig-steps {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: var(--tk-space-40);
+      }
+
+      .mig-step {
+        display: grid;
+        grid-template-columns: 40px minmax(0, 1fr);
+        gap: var(--tk-space-20);
+      }
+
+      .mig-step-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        font-family: var(--tk-font-heading);
+        font-size: var(--tk-text-heading-4-size);
+        font-weight: var(--tk-text-heading-4-weight);
+        color: var(--tk-color-link);
+        background: var(--tk-color-surface-field);
+        border: 1px solid var(--tk-color-link);
+        border-radius: var(--tk-radius-full);
+      }
+
+      .mig-step-body { min-width: 0; }
+
+      .mig-step-body h3 { margin-bottom: var(--tk-space-8); }
+
+      .mig-step-body .tree,
+      .mig-step-body .code-strip { margin-top: var(--tk-space-16); }
+
+      .mig-step-body .code-strip { margin-bottom: var(--tk-space-16); }
+
+      @media (max-width: 767px) {
+        .mig-step {
+          grid-template-columns: minmax(0, 1fr);
+          gap: var(--tk-space-12);
+        }
+      }
+
+      .panel {
+        padding: var(--tk-space-24);
+        background: var(--tk-color-surface-muted);
+        border: 1px solid var(--tk-color-border-default);
+        border-radius: var(--tk-radius-md);
+      }
+
+      .panel h3 { margin-bottom: var(--tk-space-8); }
+
+      .panel > :last-child { margin-bottom: 0; }
+
+      .panel .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--tk-space-16);
+        margin-top: var(--tk-space-24);
+      }
+    </style>
+    <div class="container">
+      <span class="eyebrow">v1 &rarr; v2</span>
+      <h1>Migrate from v1 to v2</h1>
+      <p class="lead">Antigravity sunset workflows on 2026-10-19, and BMad&nbsp;6 dropped
+        <code>.bmad-core</code> — the two things the v1 stack stood on. Here is the
+        documented path off the dead stack.</p>
+
+      <!-- FR-6.1 Context: the two deaths -->
+      <section class="section" aria-labelledby="context-title">
+        <div class="section-head">
+          <span class="eyebrow">Context</span>
+          <h2 id="context-title">What died, and when</h2>
+          <p class="lead">Two upstream decisions landed on the same template.</p>
+        </div>
+        <div class="grid cols-2">
+          <tk-article-card variant="charcoal" heading="Antigravity sunset workflows"
+            description="On 2026-10-19, Antigravity retired the workflow surface. The .agent/workflows/ directory behind the v1 template no longer runs — its /pm-style commands are dead weight."
+            href="https://antigravity.google/docs/migration/workflows-to-skills/"
+            link-label="Workflows → skills migration"></tk-article-card>
+          <tk-article-card variant="charcoal" heading="BMad 6 dropped .bmad-core"
+            description="BMad ≥ 6 no longer installs .bmad-core/ — the v4 layout BMAD 4.44.3-era installs used, and the v1 template's whole runtime. v6 lives in _bmad/ and targets Antigravity natively."
+            href="https://github.com/bmad-code-org/BMAD-METHOD/blob/V6.12/docs/fr/how-to/upgrade-to-v6.md"
+            link-label="BMad upgrade-to-v6 guide"></tk-article-card>
+        </div>
+        <p>Net effect: a January-era clone of this template carries dead
+          <code>/pm-style</code> commands and a stale runtime. The fix is three steps.</p>
+      </section>
+
+      <!-- FR-6.2 The three migration steps (mirrors README §Migrating) -->
+      <section class="section" aria-labelledby="steps-title">
+        <div class="section-head">
+          <span class="eyebrow">The fix</span>
+          <h2 id="steps-title">Three steps to v2</h2>
+          <p class="lead">Steps 1 and 2 follow upstream guides; step 3 is copy-paste.
+            In order, they take a January clone to a pinned v2 install.</p>
+        </div>
+        <ol class="mig-steps">
+          <li class="mig-step">
+            <span class="mig-step-num" aria-hidden="true">1</span>
+            <div class="mig-step-body">
+              <h3>Antigravity side: workflows &rarr; skills</h3>
+              <p>Follow the official
+                <a href="https://antigravity.google/docs/migration/workflows-to-skills/" rel="noopener">Workflows &rarr; skills migration guide</a>.
+                Skills are the replacement surface — this template now ships skills
+                plus a plugin, not workflows.</p>
+            </div>
+          </li>
+          <li class="mig-step">
+            <span class="mig-step-num" aria-hidden="true">2</span>
+            <div class="mig-step-body">
+              <h3>BMad side: v4 <code>.bmad-core</code> &rarr; v6 <code>_bmad/</code></h3>
+              <p>Upgrade with the v6 installer: it detects v4 leftovers and offers
+                to back them up, and your planning docs move to
+                <code>_bmad-output/planning-artifacts/</code>. The upstream
+                <a href="https://github.com/bmad-code-org/BMAD-METHOD/blob/V6.12/docs/fr/how-to/upgrade-to-v6.md" rel="noopener">upgrade-to-v6 guide</a>
+                has the details.</p>
+            </div>
+          </li>
+          <li class="mig-step">
+            <span class="mig-step-num" aria-hidden="true">3</span>
+            <div class="mig-step-body">
+              <h3>Delete v1 leftovers</h3>
+              <p>Everything below is v1 residue; none of it runs on v2. One caveat:
+                the <code>AGENTS.md</code> in this list is the v1-generated one —
+                the current repo ships its own. On a fresh clone, none of these
+                paths exist.</p>
+              <pre class="tree"><span class="hl">.agent/workflows/</span>       <span class="dim"># dead since the 2026-10-19 sunset</span>
+<span class="hl">.bmad-core/</span>             <span class="dim"># BMad 4.44.3 runtime; v6 installs into _bmad/</span>
+<span class="hl">.claude/commands/BMad/</span>  <span class="dim"># transposed Claude slash commands</span>
+<span class="hl">.cursor/rules/bmad/</span>     <span class="dim"># transposed Cursor rules</span>
+<span class="hl">.gemini/commands/BMad/</span>  <span class="dim"># transposed Gemini commands</span>
+<span class="hl">transpose_bmad.py</span>       <span class="dim"># the v1 transposition script</span>
+<span class="hl">AGENTS.md</span>               <span class="dim"># v1-generated; the current repo ships its own</span></pre>
+              <p>Or remove them all in one line, then reinstall:</p>
+              <div class="code-strip">
+                <figure class="code-block">
+                  <pre><code>rm -rf .agent/workflows/ .bmad-core/ .claude/commands/BMad/ .cursor/rules/bmad/ .gemini/commands/BMad/ transpose_bmad.py AGENTS.md</code></pre>
+                  <button class="copy-btn" type="button" aria-label="Copy cleanup command"></button>
+                </figure>
+                <figure class="code-block">
+                  <pre><code>./setup.sh <span class="cm"># fresh, pinned install</span></code></pre>
+                  <button class="copy-btn" type="button" aria-label="Copy setup command"></button>
+                </figure>
+              </div>
+              <p>Verify with <code>make smoke-test</code> if you have the Makefile —
+                it simulates a fresh clone in a scratch directory.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- FR-6.3 Planning artifacts reassurance -->
+      <section class="section" aria-labelledby="artifacts-title">
+        <div class="section-head">
+          <span class="eyebrow">Reassurance</span>
+          <h2 id="artifacts-title">Your planning artifacts are not lost</h2>
+          <p class="lead">Migration replaces machinery, not your work.</p>
+        </div>
+        <div class="grid cols-2">
+          <div class="panel">
+            <h3>Docs move, they don&rsquo;t vanish</h3>
+            <p>Old planning docs don&rsquo;t die with <code>.bmad-core</code> — they move
+              to <code>_bmad-output/planning-artifacts/</code>. The PRD, architecture,
+              epics, and stories keep working as BMad state.</p>
+          </div>
+          <div class="panel">
+            <h3>Nothing is silently deleted</h3>
+            <p>The v6 installer offers to back up v4 leftovers before replacing
+              them. And the <code>rm&nbsp;-rf</code> in step&nbsp;3 deletes exactly the
+              paths listed above it — no more.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FR-6.4 Escape hatch: v1-era tag + next steps -->
+      <section class="section" aria-labelledby="escape-title">
+        <div class="section-head">
+          <span class="eyebrow">Escape hatch</span>
+          <h2 id="escape-title">Still need v1?</h2>
+          <p class="lead">History is preserved, not rewritten.</p>
+        </div>
+        <div class="grid cols-2">
+          <tk-article-card variant="charcoal" heading="Reading old v1 code"
+            description="The pre-pivot template — workflows, the transposition script, the .bmad-core layout — is preserved as-is on the v1.0-v4-era tag."
+            href="https://github.com/salacoste/antigravity-bmad-config/tree/v1.0-v4-era"
+            link-label="Browse the tag"></tk-article-card>
+          <div class="panel">
+            <h3>Where next?</h3>
+            <p>A fresh clone beats an in-place patch — it starts from zero v1 residue.</p>
+            <div class="cta-row">
+              <tk-button variant="primary" href="./quick-start.html">Fresh start: Quick Start</tk-button>
+              <tk-button variant="secondary" href="./index.html#why-title">What changed in v2</tk-button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <tk-footer class="site-footer"></tk-footer>
+</body>
+</html>

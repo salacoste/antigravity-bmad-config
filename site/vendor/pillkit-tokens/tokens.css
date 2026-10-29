@@ -1,0 +1,292 @@
+/**
+ * pillkit-tokens — token layers (generated): light on `:host, :root`,
+ * dark semantic overrides on `[data-theme="dark"]` (Story 1.3).
+ *
+ * DO NOT EDIT BY HAND — regenerate with `pnpm gen:tokens`.
+ * Source of truth: DESIGN.md
+ * (frontmatter blocks: colors / typography / fonts / rounded / spacing / shadows / motion).
+ *
+ * The `:host` selector keeps every custom property usable inside shadow
+ * roots; kit components consume tokens exclusively via var(--tk-*) (FR-1 —
+ * zero hard-coded values outside this package).
+ */
+
+/* Colors — DESIGN.md `colors` light entries (scales, AA-adjusted semantics, tints) plus the scaffold `link`/`error` semantic aliases; the `dark-*` entries feed the dark layer below. */
+:host,
+:root {
+  /* Restricted: `#5478E9` is observed on the public Protect site and measures 4.007:1 against white; restrict it to non-text emphasis or large text, never normal white copy. */
+  --tk-color-brand-accent: #5478E9;
+  --tk-color-yellow-100: #415EB8;
+  --tk-color-yellow-200: #36509F;
+  --tk-color-yellow-300: #2D4387;
+  --tk-color-ink-100: #9EA1AD;
+  --tk-color-ink-200: #515465;
+  --tk-color-ink-300: #363745;
+  --tk-color-ink-400: #171820;
+  --tk-color-gray-100: #F7F7FA;
+  --tk-color-gray-200: #EAEBF0;
+  --tk-color-gray-300: #D4D6DE;
+  --tk-color-gray-400: #9EA1AD;
+  --tk-color-gray-500: #6D707E;
+  --tk-color-gray-600: #515465;
+  --tk-color-lightblue-100: #F2F5FF;
+  --tk-color-lightblue-200: #E6ECFF;
+  --tk-color-lightblue-300: #D4DEFF;
+  --tk-color-blue-100: #415EB8;
+  --tk-color-blue-200: #36509F;
+  --tk-color-blue-300: #2D4387;
+  --tk-color-green-100: #39B54A;
+  --tk-color-green-200: #2CA53A;
+  --tk-color-green-300: #168821;
+  --tk-color-red-100: #E01F19;
+  --tk-color-red-200: #D3120E;
+  --tk-color-red-300: #C40B08;
+  --tk-color-white: #FFFFFF;
+  --tk-color-surface-base: #FFFFFF;
+  --tk-color-surface-muted: #F7F7FA;
+  --tk-color-surface-field: #F2F5FF;
+  --tk-color-border-default: #EAEBF0;
+  --tk-color-border-strong: #D4D6DE;
+  --tk-color-text-primary: #363745;
+  /* AA override — `gray-600` / `#515465` is observed on the public Protect site and measures 7.484:1 on white; it is the normal secondary-text semantic. */
+  --tk-color-text-secondary: #515465;
+  /* Measured (Story 1.1) — `#6D707E` measures 4.919:1 on white, 4.600:1 on surface-muted, and 4.516:1 on surface-field; it is the enabled placeholder and muted-text semantic. */
+  --tk-color-text-muted: #6D707E;
+  --tk-color-text-on-primary: #FFFFFF;
+  /* Measured (Story 1.1) — `blue-100` / `#415EB8` is an observed Protect blue and measures 5.969:1 against white; use a 2px ring with 2px offset. */
+  --tk-color-focus-ring: #415EB8;
+  /* AA addition — `blue-200` / `#36509F` is the authored interaction step used for compact links on cool tinted fields. */
+  --tk-color-link-on-tint: #36509F;
+  --tk-color-tint-gray: #F7F7FA;
+  --tk-color-tint-bluegray: #E6ECFF;
+  /* Verified — Story 3.6 closure: measured `#D0F4F2` on the reference ОСАГО card (computed style + native-zoom crop, Story 2.0 capture pack), replacing the vision-inventory estimate. DESIGN.md Colors. */
+  --tk-color-tint-mint: #D0F4F2;
+  /* Verified — Story 3.6 closure: measured `#F1EBD6` on the reference Т-Образование card (computed style + native-zoom crop, Story 2.0 capture pack), replacing the vision-inventory estimate. DESIGN.md Colors. */
+  --tk-color-tint-beige: #F1EBD6;
+  --tk-color-tint-charcoal: #363745;
+  /* AA override — `#13751C` measures 5.851:1 on surface-base and 5.331:1 on the row-hover composite; delta-positive stays AA on both supported table surfaces. */
+  --tk-color-delta-positive: #13751C;
+  /* AA override — `#C40B08` measures 6.179:1 on surface-base and 5.630:1 on the row-hover composite; delta-negative stays AA on both supported table surfaces. */
+  --tk-color-delta-negative: #C40B08;
+  /* Extracted verbatim (v2, invest/stocks table divider) — `rgba(0,16,36,0.12)`; decorative structure (non-text), dark first-pass in the dark layer. DESIGN.md Colors (Table delta semantics). */
+  --tk-color-border-table: rgba(54,55,69,0.16);
+  /* Extracted verbatim (v2, invest/stocks row hover fill) — `rgba(36,74,127,0.06)`; decorative fill (non-text), dark first-pass in the dark layer. DESIGN.md Colors (Table delta semantics). */
+  --tk-color-surface-row-hover: rgba(84,120,233,0.08);
+  /* `#F1EEE8` is an inherited compatibility tint; text-primary and text-secondary remain sanctioned on it. */
+  --tk-color-tint-cream: #F1EEE8;
+  /* `#E9E0D1` is an inherited compatibility tint; Protect text-secondary measures 5.719:1 and is sanctioned on it. */
+  --tk-color-tint-cream-raised: #E9E0D1;
+  /* Measured (Story 1.1) — `#8D6040` is an inherited compatibility color; white numeral contrast is 5.413:1 and the token stays theme-invariant. */
+  --tk-color-tint-brown: #8D6040;
+  /* Semantic alias — `blue-100`, added in Story 1.3: components consume semantics, not scales (AD-2/AD-3), and the dark layer needs a semantic name to override (`dark-link`). DESIGN.md Colors (TextLink). */
+  --tk-color-link: #415EB8;
+  /* Semantic alias — `red-100`, added in Story 1.3 alongside `link` so both themes expose error semantics (the dark layer overrides it with `dark-error`). DESIGN.md Colors. */
+  --tk-color-error: #E01F19;
+  /* AA addition — `red-200` / `#D3120E` remains the inherited accessible error step for field and muted surfaces. */
+  --tk-color-error-on-field: #D3120E;
+}
+
+/* Typography — DESIGN.md `typography` (+ the `fonts` block's mono family slot). No text-transform lives in tokens: caps render uppercase at usage per DESIGN.md. */
+:host,
+:root {
+  --tk-text-heading-1-size: 50px;
+  --tk-text-heading-1-weight: 700;
+  --tk-text-heading-1-leading: 1.1;
+  --tk-text-heading-2-size: 44px;
+  --tk-text-heading-2-weight: 700;
+  --tk-text-heading-2-leading: 1.15;
+  --tk-text-heading-3-size: 36px;
+  --tk-text-heading-3-weight: 600;
+  --tk-text-heading-3-leading: 1.2;
+  --tk-text-heading-4-size: 28px;
+  --tk-text-heading-4-weight: 600;
+  --tk-text-heading-4-leading: 1.25;
+  --tk-text-heading-5-size: 24px;
+  --tk-text-heading-5-weight: 600;
+  --tk-text-heading-5-leading: 1.3;
+  --tk-text-heading-6-size: 20px;
+  --tk-text-heading-6-weight: 600;
+  --tk-text-heading-6-leading: 1.35;
+  --tk-text-body-l-size: 17px;
+  --tk-text-body-l-weight: 400;
+  --tk-text-body-l-leading: 1.5;
+  --tk-text-body-m-size: 15px;
+  --tk-text-body-m-weight: 400;
+  --tk-text-body-m-leading: 1.5;
+  --tk-text-body-s-size: 13px;
+  --tk-text-body-s-weight: 400;
+  --tk-text-body-s-leading: 1.5;
+  --tk-text-body-xs-size: 12px;
+  --tk-text-body-xs-weight: 400;
+  --tk-text-body-xs-leading: 1.45;
+  --tk-text-body-xs-tracking: 0.4px;
+  --tk-text-body-l-bold-size: 17px;
+  --tk-text-body-l-bold-weight: 600;
+  --tk-text-body-m-bold-size: 15px;
+  --tk-text-body-m-bold-weight: 600;
+  --tk-text-body-s-bold-size: 13px;
+  --tk-text-body-s-bold-weight: 600;
+  --tk-text-caps-s-size: 12px;
+  --tk-text-caps-s-weight: 600;
+  --tk-text-caps-s-tracking: 1px;
+
+  /* Font family slots — Inter-first, using the existing open dependency.
+     The public Protect site renders Circe, but redistribution rights were not
+     established. Separately licensed Daytona files remain available only for
+     authorized consumers and are not the default. Consumers with an approved
+     brand font can override the slots (recipe in TOKENS.md). A slot
+     override replaces the whole value: re-include the fallback stack. */
+  --tk-font-heading: Inter, -apple-system, system-ui, "Segoe UI", "Helvetica Neue", sans-serif;
+  --tk-font-body: Inter, -apple-system, system-ui, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  /* Mono slot — DESIGN.md `fonts` block (story 9.1): system-first chain,
+     no licensed asset. No consumer in 9.1 by design — the first is the
+     invest tables story (11.2). */
+  --tk-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+/* Radius — DESIGN.md `rounded` (pill register for controls, marketing registers for cards). */
+:host,
+:root {
+  --tk-radius-xs: 4px;
+  --tk-radius-sm: 8px;
+  --tk-radius-md: 12px;
+  --tk-radius-lg: 16px;
+  /* Verified — Story 5.6 closure: pixel-probe of the archived service-card capture (Story 2.0 pack, DPR 1) measures 24px — the arc staircase is pixel-identical to the kit's 24px render; the 3.8 ~24 reading confirmed. DESIGN.md Shapes. */
+  --tk-radius-xl: 24px;
+  /* Verified — Story 5.6 closure: pixel-probes of the archived card captures measure 22–24px (two sub-signatures within the band — banners 21.9–22.2, tiles 23.5–23.9 — collapsed to one token); the 32px vision estimate is corrected to the measured card radius — xxl equals xl. DESIGN.md Shapes. */
+  --tk-radius-xxl: 24px;
+  --tk-radius-full: 9999px;
+}
+
+/* Spacing — DESIGN.md `spacing`. */
+:host,
+:root {
+  /* Verified-systematized — Story 5.6 closure: the reference exposes no root spacing scale (inline utilities), so the kit systematizes the 4-based grid; the load-bearing steps are probe-verified at composition (container 1200px, grid-gap 20px, 96–120 section rhythm — Story 3.10 probes). DESIGN.md Layout & Spacing. */
+  --tk-space-4: 4px;
+  --tk-space-8: 8px;
+  --tk-space-12: 12px;
+  --tk-space-16: 16px;
+  --tk-space-20: 20px;
+  --tk-space-24: 24px;
+  --tk-space-32: 32px;
+  --tk-space-40: 40px;
+  --tk-space-48: 48px;
+  --tk-space-64: 64px;
+  --tk-space-96: 96px;
+  --tk-space-120: 120px;
+  --tk-space-container: 1200px;
+  --tk-space-grid-gap: 20px;
+}
+
+/* Shadows — DESIGN.md `shadows` (light theme; dark theme replaces elevation with tonal steps). */
+:host,
+:root {
+  --tk-shadow-default: 0 4px 24px rgba(54,55,69,.12);
+  --tk-shadow-hover: 0 12px 36px rgba(54,55,69,.20);
+  --tk-shadow-modal: 0 18px 30px rgba(23,24,32,.52);
+  --tk-shadow-popover: 0 25px 15px rgba(23,24,32,.03), 0 11px 11px rgba(23,24,32,.04), 0 3px 6px rgba(23,24,32,.05);
+  --tk-shadow-dropdown: 0 25px 15px rgba(23,24,32,.03), 0 11px 11px rgba(23,24,32,.04), 0 3px 6px rgba(23,24,32,.05);
+  --tk-shadow-tooltip: 0 6px 15px rgba(23,24,32,.20);
+}
+
+/* Motion — DESIGN.md `motion`. AD-9: durations and curves come exclusively from these tokens. */
+:host,
+:root {
+  --tk-motion-curve-expressive-standard: cubic-bezier(0.4,0.1,0.2,1);
+  --tk-motion-curve-expressive-entrance: cubic-bezier(0.35,1.3,0.25,1);
+  --tk-motion-curve-expressive-exit: cubic-bezier(0.4,0,1,1);
+  --tk-motion-curve-productive-standard: cubic-bezier(0.2,0,0.4,0.9);
+  --tk-motion-curve-productive-entrance: cubic-bezier(0,0,0.4,0.9);
+  --tk-motion-curve-productive-exit: cubic-bezier(0.2,0,1,1);
+  --tk-motion-duration-fastest: 75ms;
+  --tk-motion-duration-fast: 150ms;
+  --tk-motion-duration-moderate: 300ms;
+  --tk-motion-duration-slow: 500ms;
+  --tk-motion-duration-slowest: 700ms;
+}
+
+/* Reduced motion — EXPERIENCE.md: durations collapse to 0ms kit-wide (theme-independent:
+ * the same duration names are re-declared, so the dark layer inherits this too);
+ * components pair it with opacity-only fallbacks. */
+@media (prefers-reduced-motion: reduce) {
+:host,
+:root {
+  --tk-motion-duration-fastest: 0ms;
+  --tk-motion-duration-fast: 0ms;
+  --tk-motion-duration-moderate: 0ms;
+  --tk-motion-duration-slow: 0ms;
+  --tk-motion-duration-slowest: 0ms;
+}
+}
+
+/* Z-scale — scaffold mechanics, not a DESIGN.md extraction. AD-3/AD-12: z-order comes only from --tk-z-*. */
+:host,
+:root {
+  --tk-z-nav: 100;
+  --tk-z-dropdown: 200;
+  --tk-z-popover: 300;
+  --tk-z-tooltip: 400;
+  --tk-z-modal: 500;
+  --tk-z-toast: 600;
+}
+
+/* Dark theme (Story 1.3) — semantic color overrides. Sourced from the DESIGN.md `dark-*` palette per the frozen 1.3 mapping; `dark-*` keys are the palette SOURCE, never emitted as `--tk-color-dark-*`. Theme switch adds no transition (0ms; an optional 150ms cross-fade is consumer-side). */
+:host([data-theme="dark"]),
+:root[data-theme="dark"] {
+  --tk-color-surface-base: #1A1A1A;
+  --tk-color-surface-muted: #222222;
+  --tk-color-surface-field: #FFFFFF1A;
+  --tk-color-border-default: #FFFFFF24;
+  /* Derived — DESIGN.md defines no dark border-strong; `#FFFFFF3D` = dark-border `#FFFFFF24` (24-hex ≈ 14% white) lifted +12% toward opaque. Story 1.3 scaffolding decision, not an extraction. */
+  --tk-color-border-strong: #FFFFFF3D;
+  --tk-color-text-primary: #FFFFFF;
+  --tk-color-text-secondary: #FFFFFFB3;
+  --tk-color-text-muted: #FFFFFF80;
+  --tk-color-focus-ring: #66A3FF;
+  --tk-color-link: #66A3FF;
+  --tk-color-error: #FF7B74;
+  /* Alias — dark reuses `dark-link` (the light-only on-tint step exists because blue-100 fails on light fields). */
+  --tk-color-link-on-tint: #66A3FF;
+  /* Alias — dark reuses `dark-error` (the light-only on-field step exists because red-100 fails on light field/muted surfaces). */
+  --tk-color-error-on-field: #FF7B74;
+  /* Verified — Story 5.4 dark sweep: Lab L* 14.2, OKLCH L 26.0% C 0.000 (achromatic, like the light tint); held — 1.8 pt under the rule window, inside the 2-pt correction threshold; sits between tonal steps 1–2 (content tint, not elevated chrome). DESIGN.md Colors. */
+  --tk-color-tint-gray: #242424;
+  /* Verified — Story 5.4 dark sweep: Lab L* 13.9, OKLCH L 25.8%, hue 255.7° vs light 252.8° (Δ2.9° — kept); held — 2.06 pt under the window exceeds the 2-pt threshold by 0.06 but fails the visually-meaningful conjunct (sub-JND, safer direction: darker tint, more text contrast). DESIGN.md Colors. */
+  --tk-color-tint-bluegray: #1E242C;
+  /* Verified — Story 5.4 dark sweep: Lab L* 15.7, OKLCH L 27.1%, hue 175.1° vs light 192.4° (Δ17.3° — within the recorded ±20° tolerance at C ≤ 0.04); held — 0.3 pt under the window. DESIGN.md Colors. */
+  --tk-color-tint-mint: #1C2A26;
+  /* Verified — Story 5.4 dark sweep: Lab L* 15.4, OKLCH L 27.1%, hue 78.1° vs light 93.8° (Δ15.7° — within the recorded ±20° tolerance at C ≤ 0.04); held — 0.6 pt under the window. DESIGN.md Colors. */
+  --tk-color-tint-beige: #2A2620;
+  /* Verified — Story 8.2 dark sweep: Lab L* 13.26, OKLCH 25.2% C 0.004 H 84.6° vs light 84.6° (Δ0.0° — hue exact); held — 2.74 pt under the 16–20 window, but the correction fails the meaningful conjunct twice: the only in-window landing sits ≤0.3 L* from the raised sibling (the page→card step would collapse sub-JND) and the value mirrors the light pair's page≈muted-lightness relationship (surface-muted dark `#222222` = Lab 13.2 ≈ 13.26 — warm hue is the differentiator, as in light). AA holds: text-primary 15.895:1 / text-secondary 8.461:1 (tests/contrast.test.ts). DESIGN.md Colors. */
+  --tk-color-tint-cream: #232220;
+  /* Verified — Story 8.2 dark sweep: Lab L* 16.27 — INSIDE the 16–20 window; OKLCH 27.8% C 0.010 H 80.6° vs light 80.7° (Δ0.1°); pair step page→raised = Δ3.0 L* (25.2→27.8% OKLCH), a clean tonal elevation. AA holds: text-primary 14.680:1 / text-secondary 7.989:1 (tests/contrast.test.ts). DESIGN.md Colors. */
+  --tk-color-tint-cream-raised: #2B2823;
+  /* Verified — Story 8.2 dark sweep: `#39B54A` clears AA on ALL three real dark surfaces — base 6.533:1, tonal step 1 5.972:1, row-hover composite `#313131` 4.883:1 (confirmed live on the story DOM by the delta verdict legs of tests/visual/dark-sweep.spec.ts and pinned by the table-delta cases in tests/contrast.test.ts). Sourced from green-100: the existing lightest green step clears as-is, no dark value authored; green-300, the former light semantic alias, measures 3.794:1 in dark. Site anchors live in DESIGN.md Colors (Table delta semantics). */
+  --tk-color-delta-positive: #39B54A;
+  /* Verified — 2026-09-27 contrast closure: `#FF7B74` preserves a recognisable negative red and clears normal-text AA on both supported dark table surfaces — base 6.910:1 and row-hover composite `#313131` 5.165:1. It reuses the established dark error-family value; no component theme branch or hover-only token is introduced. The prior `#F63434` base-only ruling remains historical evidence. Site anchors live in DESIGN.md Colors (Table delta semantics). */
+  --tk-color-delta-negative: #FF7B74;
+  /* Verified — Story 8.2 dark sweep: `#FFFFFF1F` composites to `#363636` on dark-base (Lab 22.6, Δ+13.4 — a visible hairline) and `#3D3D3D` on tonal step 1; 1.8 L* under the dark-border composite `#3A3A3A` — the documented one-step-under divider grammar (dividers quieter than control borders). 0x1F ≈ 12% white mirrors light rgba(0,16,36,0.12). Decorative structure (non-text; 1.4.11 does not apply). DESIGN.md Colors. */
+  --tk-color-border-table: #FFFFFF1F;
+  /* Verified — Story 8.2 plus 2026-09-27 contrast closure: `#FFFFFF1A` composites to `#313131` on dark-base — Δ+11.1 L* over base, a visible-but-gentle transient step. Text-primary, text-secondary and both delta semantics pass on the composite; the weakest delta leg is positive at 4.883:1. Same 10% white as the dark-field fill family. DESIGN.md Colors. */
+  --tk-color-surface-row-hover: #FFFFFF1A;
+}
+
+/*
+ * Theme invariants — intentionally absent from the dark rule above:
+ * --tk-color-text-on-primary, --tk-color-tint-charcoal and
+ * --tk-color-tint-brown keep their light values (primary controls keep white
+ * text; charcoal and the stepper badge brown stay — DESIGN.md Colors,
+ * equality asserted at generation). Typography / radius / spacing / motion /
+ * z are theme-invariant too — single source in the :host, :root rules.
+ */
+
+/* Dark theme — tonal elevation (DESIGN.md Elevation & Depth): shadows collapse to `none`; hierarchy comes from tonal surface steps. Per-component exceptions use the `--tk-<component>-<slot>` grammar, never this layer. */
+:host([data-theme="dark"]),
+:root[data-theme="dark"] {
+  --tk-shadow-default: none;
+  --tk-shadow-hover: none;
+  --tk-shadow-modal: none;
+  --tk-shadow-popover: none;
+  --tk-shadow-dropdown: none;
+  --tk-shadow-tooltip: none;
+}

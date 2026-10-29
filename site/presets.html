@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Presets — antigravity-bmad-config</title>
+  <meta name="description" content="Language and team presets land in the durable _bmad/custom/ layer — they survive every BMad installer update. English and Russian ship built-in.">
+  <meta property="og:title" content="Presets — antigravity-bmad-config">
+  <meta property="og:description" content="Language and team presets land in the durable _bmad/custom/ layer — they survive every BMad installer update. English and Russian ship built-in.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://salacoste.github.io/antigravity-bmad-config/presets.html">
+  <meta property="og:image" content="https://salacoste.github.io/antigravity-bmad-config/assets/social-card.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="vendor/pillkit-tokens/tokens.css">
+  <link rel="stylesheet" href="assets/site.css">
+  <script type="module" src="vendor/pillkit-components/tk-components.js"></script>
+  <script type="module" src="assets/chrome.js"></script>
+  <script type="module" src="assets/site.js"></script>
+</head>
+<body data-page="presets">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <tk-navbar class="site-navbar" sticky burger-label="Menu">
+    <a slot="logo" class="brand" href="./index.html">
+      <img src="assets/wordmark.svg" alt="" width="28" height="28">
+      <span class="brand-name">antigravity<b>&hairsp;&middot;&hairsp;bmad</b></span>
+    </a>
+    <div slot="utilities" class="nav-utilities">
+      <a class="gh-btn" href="https://github.com/salacoste/antigravity-bmad-config" rel="noopener">
+        <svg class="gh-mark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        <span>Star</span>
+        <img class="gh-count" src="https://img.shields.io/github/stars/salacoste/antigravity-bmad-config?style=flat&amp;label=&amp;color=8CB8FF" alt="" width="28" height="14" decoding="async">
+      </a>
+    </div>
+  </tk-navbar>
+
+  <main id="main" class="page">
+    <style>
+      /* presets.html — page-local layout only; every color via --tk-* tokens. */
+
+      /* FR-7.1 — three concept boxes */
+      .concepts {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--tk-space-grid-gap);
+      }
+
+      .concept {
+        padding: var(--tk-space-24);
+        background: var(--tk-color-surface-field);
+        border: 1px solid var(--tk-color-border-default);
+        border-radius: var(--tk-radius-md);
+      }
+
+      .concept h3 {
+        font-size: var(--tk-text-heading-5-size);
+        font-weight: var(--tk-text-heading-5-weight);
+        line-height: var(--tk-text-heading-5-leading);
+        margin-bottom: var(--tk-space-8);
+      }
+
+      .concept p:last-child { margin-bottom: 0; }
+
+      /* FR-7.2 — preset card interiors */
+      .preset-name {
+        display: inline-flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--tk-space-12);
+      }
+
+      .preset-body {
+        display: grid;
+        gap: var(--tk-space-12);
+        align-content: start;
+      }
+
+      .preset-body p { margin: 0; }
+
+      .cmd-label {
+        margin-top: var(--tk-space-4);
+        font-size: var(--tk-text-body-s-size, 13px);
+        color: var(--tk-color-text-muted);
+      }
+
+      /* FR-7.4 — numbered recipe */
+      .recipe {
+        list-style: none;
+        counter-reset: recipe;
+        margin: 0;
+        padding: 0;
+        max-width: 72ch;
+        display: grid;
+        gap: var(--tk-space-40);
+      }
+
+      .recipe > li {
+        counter-increment: recipe;
+        position: relative;
+        padding-left: var(--tk-space-56);
+        min-width: 0; /* grid item — let inner code blocks scroll, not stretch the page */
+      }
+
+      .recipe > li::before {
+        content: counter(recipe);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        font-family: var(--tk-font-heading);
+        font-weight: 600;
+        color: var(--tk-color-text-primary);
+        background: var(--tk-color-tint-bluegray);
+        border: 1px solid var(--tk-color-border-default);
+        border-radius: var(--tk-radius-full);
+      }
+
+      .recipe h3 {
+        font-size: var(--tk-text-heading-4-size);
+        font-weight: var(--tk-text-heading-4-weight);
+        line-height: var(--tk-text-heading-4-leading);
+        margin-bottom: var(--tk-space-8);
+      }
+
+      .recipe figure { margin-block: var(--tk-space-12); }
+
+      /* FR-7.4 — merge-rules callout */
+      .note {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--tk-space-12);
+        margin-top: var(--tk-space-40);
+        padding: var(--tk-space-16) var(--tk-space-20);
+        background: var(--tk-color-tint-bluegray);
+        border: 1px solid var(--tk-color-border-default);
+        border-left: 3px solid var(--tk-color-link);
+        border-radius: var(--tk-radius-md);
+      }
+
+      .note p { margin: 0; }
+
+      /* tk-data-table grid tracks don't shrink below content min-width —
+         scroll the whole table horizontally instead of widening the page. */
+      .table-scroll {
+        position: relative; /* containing block for the table's shadow layout */
+        overflow-x: auto;
+        border-radius: var(--tk-radius-md);
+      }
+
+      @media (max-width: 1023px) {
+        .concepts { grid-template-columns: 1fr; }
+      }
+    </style>
+
+    <div class="container">
+      <span class="eyebrow">Presets &amp; customization</span>
+      <h1>Presets that survive updates</h1>
+      <p class="lead">Presets write to <code>_bmad/custom/</code> — the one BMad-owned
+        directory the installer never touches. Apply one with a single command,
+        and it outlives every BMad update.</p>
+
+      <!-- FR-7.1 · Team layer -->
+      <section class="section" aria-labelledby="team-layer-title">
+        <div class="section-head">
+          <span class="eyebrow">Team layer</span>
+          <h2 id="team-layer-title">The team layer: <code>_bmad/custom/</code></h2>
+          <p class="lead">Every BMad install reserves one directory for your team.
+            The installer regenerates everything around it on update — and never
+            writes inside it.</p>
+        </div>
+        <div class="concepts">
+          <div class="concept">
+            <h3>Never touched by the installer</h3>
+            <p><code>_bmad/custom/</code> is the one BMad-owned directory the
+              installer never touches — safe across updates, as documented in the
+              BMad v6 config header (<code>_bmad/config.toml</code>).</p>
+          </div>
+          <div class="concept">
+            <h3>Re-applied on every setup</h3>
+            <p><code>./setup.sh</code> re-installs the pinned runtime — regenerating
+              <code>_bmad/</code> — and then applies your preset into
+              <code>_bmad/custom/</code>, so a BMad update never eats your team's
+              configuration. Presets are idempotent: re-running setup re-applies
+              them, and if you have local modifications in <code>_bmad/custom/</code>,
+              setup asks before overwriting.</p>
+          </div>
+          <div class="concept">
+            <h3>Merges are predictable</h3>
+            <p>Presets carry per-skill persona overrides in
+              <code>_bmad/custom/&lt;skill-name&gt;.toml</code>. Merge rules are
+              documented in each skill's <code>customize.toml</code>:
+              <strong>scalars replace, arrays append</strong>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FR-7.2 · Preset cards -->
+      <section class="section" aria-labelledby="presets-title">
+        <div class="section-head">
+          <span class="eyebrow">Built-in presets</span>
+          <h2 id="presets-title">Two presets, one mechanism</h2>
+          <p class="lead"><code>english</code> is a documented near-no-op that shows
+            the mechanism. <code>russian</code> puts it to work: split languages plus
+            a persona-override exemplar for John (PM).</p>
+        </div>
+        <div class="grid cols-2">
+          <tk-feature-card>
+            <span slot="heading" class="preset-name">english
+              <tk-badge label="default" variant="incentive"></tk-badge>
+            </span>
+            <div slot="description" class="preset-body">
+              <p>English conversation and artifacts — a documented near-no-op that
+                shows the mechanism: two keys, applied into the team layer.</p>
+              <figure class="code-block">
+                <pre><code>[core]
+communication_language = "English"
+document_output_language = "English"</code></pre>
+                <button class="copy-btn" type="button" aria-label="Copy english preset config"></button>
+              </figure>
+              <p class="cmd-label">Apply it:</p>
+              <figure class="code-block">
+                <pre><code>./setup.sh english</code></pre>
+                <button class="copy-btn" type="button" aria-label="Copy english apply command"></button>
+              </figure>
+            </div>
+          </tk-feature-card>
+          <tk-feature-card>
+            <span slot="heading" class="preset-name">russian
+              <tk-badge label="RU · EN" variant="stat"></tk-badge>
+            </span>
+            <div slot="description" class="preset-body">
+              <p>Conversation in Russian, artifacts (PRD, architecture, stories) in
+                English — for teams that think in Russian and ship in English.
+                Also ships a persona-override exemplar for John (PM) —
+                <tk-link href="#write-your-own" variant="inline">see the recipe below</tk-link>.</p>
+              <figure class="code-block">
+                <pre><code>[core]
+communication_language = "Russian"
+document_output_language = "English"</code></pre>
+                <button class="copy-btn" type="button" aria-label="Copy russian preset config"></button>
+              </figure>
+              <p class="cmd-label">Apply it:</p>
+              <figure class="code-block">
+                <pre><code>./setup.sh russian</code></pre>
+                <button class="copy-btn" type="button" aria-label="Copy russian apply command"></button>
+              </figure>
+            </div>
+          </tk-feature-card>
+        </div>
+      </section>
+
+      <!-- FR-7.3 · Config keys reference -->
+      <section class="section" aria-labelledby="keys-title">
+        <div class="section-head">
+          <span class="eyebrow">Reference</span>
+          <h2 id="keys-title">Config keys reference</h2>
+          <p class="lead">Everything a preset can set, from the BMad v6.12 config
+            schema. Set these in your preset's <code>_bmad/custom/config.toml</code>;
+            after install, the full schema lives in the header comments of
+            <code>_bmad/config.toml</code>.</p>
+        </div>
+        <div class="table-scroll" tabindex="0" role="group"
+             aria-label="Config keys table — scrolls horizontally on small screens">
+          <tk-data-table caption="Preset config keys (BMad v6.12 schema)"></tk-data-table>
+        </div>
+      </section>
+
+      <!-- FR-7.4 · Write your own preset -->
+      <section class="section" id="write-your-own" aria-labelledby="write-title">
+        <div class="section-head">
+          <span class="eyebrow">Recipe</span>
+          <h2 id="write-title">Write your own preset</h2>
+          <p class="lead">Copy, edit, apply — the same mechanism the built-ins use.
+            Commit the result and your whole team shares the configuration.</p>
+        </div>
+        <ol class="recipe">
+          <li>
+            <h3>Copy the english preset</h3>
+            <p>Start from <code>english</code> and name it after your team:</p>
+            <figure class="code-block">
+              <pre><code>cp -r presets/english presets/my-team</code></pre>
+              <button class="copy-btn" type="button" aria-label="Copy preset copy command"></button>
+            </figure>
+            <p>The skeleton you just copied:</p>
+            <figure class="code-block">
+              <pre><code>presets/my-team/
+└── _bmad/custom/
+    └── config.toml</code></pre>
+            </figure>
+          </li>
+          <li>
+            <h3>Edit the config, add persona overrides</h3>
+            <p>Edit <code>presets/my-team/_bmad/custom/config.toml</code> with the
+              keys above. Add per-skill persona overrides as
+              <code>_bmad/custom/&lt;skill-name&gt;.toml</code>. The russian preset
+              ships an exemplar for John (PM) —
+              <code>presets/russian/_bmad/custom/bmad-agent-pm.toml</code>:</p>
+            <figure class="code-block">
+              <pre><code>[agent]
+communication_style = "Detective's 'why?' relentless. Direct, data-sharp, cuts through fluff to what matters. Interviews the user in Russian; keeps BMad and PM terminology (PRD, epic, story, acceptance criteria) and all artifact headings in English."</code></pre>
+              <button class="copy-btn" type="button" aria-label="Copy John (PM) persona override"></button>
+            </figure>
+            <p><code>communication_style</code> is a scalar — this value
+              <strong>replaces</strong> the default. An array key (such as
+              <code>principles</code>) would <strong>append</strong> to the
+              defaults instead.</p>
+          </li>
+          <li>
+            <h3>Commit it, apply it</h3>
+            <p>Commit the preset so your team gets the same configuration, then
+              apply it:</p>
+            <figure class="code-block">
+              <pre><code>./setup.sh my-team</code></pre>
+              <button class="copy-btn" type="button" aria-label="Copy my-team apply command"></button>
+            </figure>
+          </li>
+        </ol>
+        <aside class="note" aria-label="Merge rules">
+          <tk-badge label="Merge rules" variant="stat"></tk-badge>
+          <p>Scalars replace, arrays append, and menu items merge by code. The full
+            schema for persona overrides lives in any installed skill's
+            <code>customize.toml</code>
+            (<code>.agent/skills/bmad-agent-*/customize.toml</code>).</p>
+        </aside>
+      </section>
+    </div>
+
+    <script type="module">
+      const table = document.querySelector('tk-data-table');
+      table.columns = [
+        { key: 'key', header: 'Key', width: '1.1fr' },
+        { key: 'meaning', header: 'What it sets', width: '2fr' },
+        { key: 'example', header: 'Example' }
+      ];
+      table.rows = [
+        { cells: { key: { primary: 'user_name', secondary: '[core]' },
+          meaning: { primary: 'how personas address you' },
+          example: { primary: '"Ada"' } } },
+        { cells: { key: { primary: 'communication_language', secondary: '[core]' },
+          meaning: { primary: 'language personas speak' },
+          example: { primary: '"Russian"' } } },
+        { cells: { key: { primary: 'document_output_language', secondary: '[core]' },
+          meaning: { primary: 'language of generated artifacts' },
+          example: { primary: '"English"' } } },
+        { cells: { key: { primary: 'output_folder', secondary: '[core]' },
+          meaning: { primary: 'artifact root' },
+          example: { primary: '"_bmad-output"' } } },
+        { cells: { key: { primary: 'user_skill_level', secondary: '[modules.bmm]' },
+          meaning: { primary: 'beginner | intermediate | expert' },
+          example: { primary: '"intermediate"' } } },
+        { cells: { key: { primary: 'planning_artifacts', secondary: '[modules.bmm]' },
+          meaning: { primary: 'planning artifact path' },
+          example: { primary: '"{project-root}/_bmad-output/planning-artifacts"' } } },
+        { cells: { key: { primary: 'implementation_artifacts', secondary: '[modules.bmm]' },
+          meaning: { primary: 'implementation artifact path' },
+          example: { primary: '"{project-root}/_bmad-output/implementation-artifacts"' } } },
+        { cells: { key: { primary: 'project_knowledge', secondary: '[modules.bmm]' },
+          meaning: { primary: 'project knowledge path' },
+          example: { primary: '"{project-root}/docs"' } } }
+      ];
+    </script>
+  </main>
+
+  <tk-footer class="site-footer"></tk-footer>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About &amp; Roadmap — antigravity-bmad-config</title>
+  <meta name="description" content="Why this template stays a thin layer over pinned BMad, where it is heading, and how to contribute.">
+  <meta property="og:title" content="About &amp; Roadmap — antigravity-bmad-config">
+  <meta property="og:description" content="Why this template stays a thin layer over pinned BMad, where it is heading, and how to contribute.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://salacoste.github.io/antigravity-bmad-config/about.html">
+  <meta property="og:image" content="https://salacoste.github.io/antigravity-bmad-config/assets/social-card.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="vendor/pillkit-tokens/tokens.css">
+  <link rel="stylesheet" href="assets/site.css">
+  <script type="module" src="vendor/pillkit-components/tk-components.js"></script>
+  <script type="module" src="assets/chrome.js"></script>
+  <script type="module" src="assets/site.js"></script>
+</head>
+<body data-page="about">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <tk-navbar class="site-navbar" sticky burger-label="Menu">
+    <a slot="logo" class="brand" href="./index.html">
+      <img src="assets/wordmark.svg" alt="" width="28" height="28">
+      <span class="brand-name">antigravity<b>&hairsp;&middot;&hairsp;bmad</b></span>
+    </a>
+    <div slot="utilities" class="nav-utilities">
+      <a class="gh-btn" href="https://github.com/salacoste/antigravity-bmad-config" rel="noopener">
+        <svg class="gh-mark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        <span>Star</span>
+        <img class="gh-count" src="https://img.shields.io/github/stars/salacoste/antigravity-bmad-config?style=flat&amp;label=&amp;color=8CB8FF" alt="" width="28" height="14" decoding="async">
+      </a>
+    </div>
+  </tk-navbar>
+
+  <main id="main" class="page">
+    <style>
+      /* About-page-local card shapes. site.css ships the layout primitives
+         (.section, .grid, .code-block); these panels are this page's own.
+         Tokens only — a rebrand stays a token override, never a raw value. */
+      .about-card {
+        padding: var(--tk-space-24);
+        border: 1px solid var(--tk-color-border-default);
+        border-radius: var(--tk-radius-md);
+        background: var(--tk-color-surface-muted);
+      }
+
+      .about-card h3 { margin-bottom: var(--tk-space-8); }
+      .about-card > :last-child { margin-bottom: 0; }
+
+      .roadmap-card {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--tk-space-12);
+      }
+
+      .roadmap-card h3,
+      .roadmap-card p { margin: 0; }
+
+      .roadmap-reviewed {
+        margin-top: auto;
+        padding-top: var(--tk-space-8);
+        font-size: var(--tk-text-body-s-size, 13px);
+        color: var(--tk-color-text-muted);
+      }
+
+      .security-note { border-left: 3px solid var(--tk-color-link); }
+
+      .rules-list li + li { margin-top: var(--tk-space-8); }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--tk-space-16);
+        margin-top: var(--tk-space-32);
+      }
+    </style>
+
+    <div class="container">
+      <span class="eyebrow">About</span>
+      <h1>A thin layer, on purpose</h1>
+      <p class="lead">This repo will never be a BMad fork. It pins, wires, and gets out of the way.</p>
+
+      <!-- FR-8.1 Philosophy -->
+      <section class="section" aria-labelledby="philosophy-title">
+        <div class="section-head">
+          <span class="eyebrow">Why</span>
+          <h2 id="philosophy-title">Philosophy</h2>
+          <p class="lead">Everything here exists to wire BMad into Antigravity natively. Nothing here adds methodology of its own.</p>
+        </div>
+        <div class="grid cols-2">
+          <div class="about-card">
+            <h3>What this repo is</h3>
+            <p>A thin layer over a pinned upstream. It wires BMad into Antigravity natively —
+              a setup script, an orchestrator plugin, and presets — and adds no methodology of its own.</p>
+          </div>
+          <div class="about-card">
+            <h3>What it will never be</h3>
+            <p>A BMad fork. The pin means upstream releases never change your project under you;
+              the thinness means every piece stays inspectable and replaceable. The BMad runtime
+              is installer-generated, not hand-maintained.</p>
+          </div>
+        </div>
+        <p>When BMad changes, the template changes one line — <code>.bmad-version</code> — plus
+          whatever <code>make smoke-test</code> catches. Not a rewrite.</p>
+      </section>
+
+      <!-- FR-8.2 Roadmap strip -->
+      <section class="section" aria-labelledby="roadmap-title">
+        <div class="section-head">
+          <span class="eyebrow">Where next</span>
+          <h2 id="roadmap-title">Roadmap</h2>
+          <p class="lead">Every item carries an explicit status and the date it was last reviewed. No undated promises.</p>
+        </div>
+        <div class="grid cols-3">
+          <article class="about-card roadmap-card">
+            <tk-badge variant="incentive" label="done"></tk-badge>
+            <h3>Pin bumps</h3>
+            <p><code>bmad-method@6.12.4</code> is pinned; the bump path is documented —
+              <code>make update</code>, <code>make verify-pin</code>, <code>make smoke-test</code>.</p>
+            <p class="roadmap-reviewed">Status: done · Last reviewed 2026-10-29</p>
+          </article>
+          <article class="about-card roadmap-card">
+            <tk-badge variant="stat" label="evaluating"></tk-badge>
+            <h3>BMad v7 evaluation</h3>
+            <p>v7 is in alpha and not npm-pinnable; the template stays on v6 and re-evaluates
+              when v7 is stable.</p>
+            <p class="roadmap-reviewed">Status: evaluating · Last reviewed 2026-10-29</p>
+          </article>
+          <article class="about-card roadmap-card">
+            <tk-badge variant="stat" label="planned"></tk-badge>
+            <h3>Antigravity Marketplace listing</h3>
+            <p>The submission is prepared; the listing is not published yet.</p>
+            <p class="roadmap-reviewed">Status: planned · Last reviewed 2026-10-29</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- FR-8.3 Contributing -->
+      <section class="section" aria-labelledby="contributing-title">
+        <div class="section-head">
+          <span class="eyebrow">Pull requests</span>
+          <h2 id="contributing-title">Contributing</h2>
+          <p class="lead">A small bar, enforced: both checks green, four ground rules, and one file with the details.</p>
+        </div>
+        <div class="grid cols-2">
+          <div>
+            <h3>Green before you push</h3>
+            <p>Run both targets from the repository root; a PR that leaves either red does not merge:</p>
+            <div class="code-strip">
+              <figure class="code-block">
+                <pre><code>make smoke-test
+make verify-pin</code></pre>
+                <button class="copy-btn" type="button" aria-label="Copy PR checks"></button>
+              </figure>
+            </div>
+            <tk-link href="https://github.com/salacoste/antigravity-bmad-config/blob/main/CONTRIBUTING.md" variant="standalone" target="_blank" rel="noopener">Read CONTRIBUTING.md →</tk-link>
+          </div>
+          <div>
+            <h3>Ground rules</h3>
+            <ul class="rules-list">
+              <li>Generated directories are read-only for contributors:
+                <code>_bmad/</code>, <code>_bmad-output/</code>, <code>.agent/</code>, <code>.agents/skills/</code>.</li>
+              <li>Preset changes go in <code>presets/**</code> — the source.
+                <code>_bmad/custom/</code> is installer output.</li>
+              <li>The pin moves only with a passing <code>make smoke-test</code>.</li>
+              <li>Don't reference the removed v6 shim skill names — <code>bmad-create-story</code>
+                and <code>bmad-dev-story</code> are gone in BMad v7.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- FR-8.4 Credits & license -->
+      <section class="section" aria-labelledby="credits-title">
+        <div class="section-head">
+          <span class="eyebrow">Fine print</span>
+          <h2 id="credits-title">Credits &amp; license</h2>
+          <p class="lead">Who owns what, and where to read the full text.</p>
+        </div>
+        <div class="grid cols-3">
+          <tk-article-card variant="charcoal" heading="This template"
+            description="MIT. The full license text ships with the repository."
+            href="https://github.com/salacoste/antigravity-bmad-config/blob/main/LICENSE"
+            link-label="Read LICENSE →"></tk-article-card>
+          <tk-article-card variant="charcoal" heading="BMad Method"
+            description="Built on the upstream BMad Method by its authors. Documentation lives at bmadcode.com and docs.bmad-method.org."
+            href="https://github.com/bmad-code-org/BMAD-METHOD"
+            link-label="Visit the upstream repo →"></tk-article-card>
+          <tk-article-card variant="charcoal" heading="This site"
+            description="Assembled from protect-auto-ui-kit, the owner's component substrate (MIT portions); the dark theme comes from its token system."
+            href="https://github.com/salacoste/protect-auto-ui-kit"
+            link-label="See the kit →"></tk-article-card>
+        </div>
+        <div class="about-card security-note">
+          <h3>Found a security issue?</h3>
+          <p>Don't open a public issue. Open a
+            <a href="https://github.com/salacoste/antigravity-bmad-config/security/advisories">GitHub Security Advisory</a>
+            — the preferred channel — or read
+            <a href="https://github.com/salacoste/antigravity-bmad-config/blob/main/SECURITY.md">SECURITY.md</a>
+            for the policy.</p>
+        </div>
+        <div class="cta-row">
+          <tk-button variant="primary" href="./quick-start.html">Get started</tk-button>
+          <tk-button variant="secondary" href="https://github.com/salacoste/antigravity-bmad-config" target="_blank" rel="noopener">View on GitHub</tk-button>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <tk-footer class="site-footer"></tk-footer>
+</body>
+</html>

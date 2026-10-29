@@ -1,0 +1,20 @@
+# preset: antigravity-bmad-config/english
+#
+# Team layer for BMAD config — never touched by the BMAD installer.
+# Applied by ./setup.sh english. Edit freely; setup will ask before
+# overwriting your changes.
+
+[core]
+communication_language = "English"
+document_output_language = "English"
+
+# Examples (uncomment to use):
+#
+# [core]
+# user_name = "Ada"
+#
+# [modules.bmm]
+# user_skill_level = "intermediate"
+#
+# [agents.bmad-agent-dev]
+# description = "Prefers small diffs and conventional commits."

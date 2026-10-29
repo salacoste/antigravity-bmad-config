@@ -1,3 +1,25 @@
-# BMAD (local only) - Commented out for config repo tracking
-# .bmad-core/
-.bmad-*/
+# ── BMAD v6 runtime ─────────────────────────────────────────────
+# Installed by ./setup.sh from the pinned version in .bmad-version.
+# Never commit — regenerate any time with `make setup`.
+/_bmad/
+
+# Your planning/implementation artifacts. Uncomment to keep them in git:
+# /_bmad-output/
+
+# ── Antigravity installer targets ───────────────────────────────
+# BMAD skills land here via `--tools antigravity,antigravity-cli`.
+# Our own additions live in .agents/plugins/ and ARE committed.
+/.agent/
+/.agents/skills/
+
+# Personal BMAD overrides (layer: _bmad/custom/*.user.toml)
+*.user.toml
+
+# ── Local tool state ────────────────────────────────────────────
+.omc/
+.claude/sessions/
+.claude/state/
+
+# ── OS noise ────────────────────────────────────────────────────
+.DS_Store
+__pycache__/

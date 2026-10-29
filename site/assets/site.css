@@ -1,0 +1,549 @@
+/* ==========================================================================
+   site.css — site-local styles for the antigravity-bmad-config site.
+
+   Built ONLY on --tk-* design tokens (PRD addendum §A: rebrand by
+   overriding tokens, never by hard-coding values). Dark theme comes from
+   <html data-theme="dark"> + the vendored token layers; structural px and
+   this file's own layout constants are the only raw values.
+
+   Site-local patterns (code block, accordion, diagrams) also live here —
+   the kit deliberately ships none of them (addendum §E "kit gaps").
+   ========================================================================== */
+
+/* ── Base ─────────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--tk-font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--tk-color-text-primary);
+  background: var(--tk-color-surface-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+main { flex: 1 0 auto; }
+
+img,
+svg { max-width: 100%; height: auto; }
+
+a { color: var(--tk-color-link); }
+
+:focus-visible {
+  outline: 2px solid var(--tk-color-focus-ring);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--tk-color-focus-ring);
+  color: var(--tk-color-surface-base);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: var(--tk-space-8);
+  z-index: 100;
+  padding: var(--tk-space-8) var(--tk-space-16);
+  border-radius: var(--tk-radius-sm);
+  background: var(--tk-color-surface-muted);
+  color: var(--tk-color-text-primary);
+  text-decoration: none;
+}
+
+.skip-link:focus { left: var(--tk-space-8); }
+
+/* ── Layout ───────────────────────────────────────────────────────────── */
+
+.container {
+  max-width: var(--tk-space-container);
+  margin-inline: auto;
+  padding-inline: var(--tk-space-24);
+}
+
+main.page {
+  padding-block: var(--tk-space-48) var(--tk-space-96);
+}
+
+.section { margin-block: var(--tk-space-64); }
+
+.section-head { max-width: 72ch; margin-bottom: var(--tk-space-32); }
+
+.grid {
+  display: grid;
+  gap: var(--tk-space-grid-gap);
+}
+
+.grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+
+@media (max-width: 1023px) {
+  .grid.cols-3,
+  .grid.cols-2 { grid-template-columns: 1fr; }
+}
+
+/* ── Typography ───────────────────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--tk-font-heading);
+  color: var(--tk-color-text-primary);
+  margin: 0 0 var(--tk-space-16);
+}
+
+h1 {
+  font-size: var(--tk-text-heading-1-size);
+  font-weight: var(--tk-text-heading-1-weight);
+  line-height: var(--tk-text-heading-1-leading);
+}
+
+h2 {
+  font-size: var(--tk-text-heading-2-size);
+  font-weight: var(--tk-text-heading-2-weight);
+  line-height: var(--tk-text-heading-2-leading);
+}
+
+h3 {
+  font-size: var(--tk-text-heading-3-size);
+  font-weight: var(--tk-text-heading-3-weight);
+  line-height: var(--tk-text-heading-3-leading);
+}
+
+h4 {
+  font-size: var(--tk-text-heading-4-size);
+  font-weight: var(--tk-text-heading-4-weight);
+  line-height: var(--tk-text-heading-4-leading);
+}
+
+@media (max-width: 767px) {
+  h1 { font-size: var(--tk-text-heading-2-size); }
+  h2 { font-size: var(--tk-text-heading-3-size); }
+  h3 { font-size: var(--tk-text-heading-4-size); }
+}
+
+p { margin: 0 0 var(--tk-space-16); }
+
+.lead {
+  font-size: var(--tk-text-body-l-size);
+  line-height: 1.55;
+  color: var(--tk-color-text-secondary);
+  max-width: 68ch;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: var(--tk-space-12);
+  font-size: var(--tk-text-body-s-size, 13px);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tk-color-link);
+}
+
+code,
+kbd {
+  font-family: var(--tk-font-mono);
+  font-size: 0.92em;
+  padding: 0.15em 0.45em;
+  border-radius: var(--tk-radius-xs);
+  background: var(--tk-color-surface-field);
+  border: 1px solid var(--tk-color-border-default);
+  white-space: nowrap;
+}
+
+code.block { white-space: pre; }
+
+/* ── Shell chrome (navbar / footer) ───────────────────────────────────── */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tk-space-12);
+  text-decoration: none;
+  color: var(--tk-color-text-primary);
+  font-family: var(--tk-font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.brand img { width: 28px; height: 28px; display: block; }
+
+.brand b { color: var(--tk-color-link); font-weight: 700; }
+
+.nav-utilities { display: flex; align-items: center; gap: var(--tk-space-12); }
+
+.gh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tk-space-8);
+  min-height: 44px; /* §F touch target */
+  padding: var(--tk-space-8) var(--tk-space-16);
+  border: 1px solid var(--tk-color-border-strong);
+  border-radius: var(--tk-radius-full);
+  background: var(--tk-color-surface-muted);
+  color: var(--tk-color-text-primary);
+  font-size: var(--tk-text-body-s-size, 13px);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color var(--tk-motion-duration-fast) var(--tk-motion-curve-productive-standard);
+}
+
+.gh-btn:hover { background: var(--tk-color-surface-field); }
+
+.gh-count { display: block; }
+
+.site-footer { margin-top: auto; }
+
+.footer-legal {
+  margin: var(--tk-space-24) 0 0;
+  padding-top: var(--tk-space-16);
+  border-top: 1px solid var(--tk-color-border-default);
+  font-size: var(--tk-text-body-s-size, 13px);
+  color: var(--tk-color-text-muted);
+}
+
+.footer-legal a { color: var(--tk-color-link); }
+
+/* ── Code blocks with copy (§E kit gap — no kit component exists) ────── */
+
+.code-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--tk-space-12);
+  margin: 0;
+}
+
+.code-block { position: relative; margin: 0; min-width: 0; }
+
+.code-block pre {
+  margin: 0;
+  padding: var(--tk-space-16) var(--tk-space-96) var(--tk-space-16) var(--tk-space-20);
+  font-family: var(--tk-font-mono);
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--tk-color-text-primary);
+  background: var(--tk-color-surface-field);
+  border: 1px solid var(--tk-color-border-default);
+  border-radius: var(--tk-radius-md);
+  overflow-x: auto;
+}
+
+.code-block pre .cm { color: var(--tk-color-text-secondary); } /* shell comments (muted fails 4.5:1 on the field composite) */
+
+/* Long commands scroll inside the block, never widen the page
+   (overrides the inline-code `nowrap`). */
+.code-block pre code { white-space: pre; }
+
+/* Long inline paths (nowrap chips) wrap on narrow screens instead of
+   widening the page; block code keeps its pre scroll via the rule above. */
+@media (max-width: 767px) {
+  code,
+  kbd {
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+}
+
+.copy-btn {
+  position: absolute;
+  top: var(--tk-space-8);
+  right: var(--tk-space-8);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px; /* §F touch target */
+  padding: 0 var(--tk-space-12);
+  font-family: var(--tk-font-body);
+  font-size: var(--tk-text-body-xs-size, 12px);
+  font-weight: 600;
+  color: var(--tk-color-text-secondary);
+  background: var(--tk-color-surface-muted);
+  border: 1px solid var(--tk-color-border-default);
+  border-radius: var(--tk-radius-full);
+  cursor: pointer;
+  transition:
+    color var(--tk-motion-duration-fast) var(--tk-motion-curve-productive-standard),
+    border-color var(--tk-motion-duration-fast) var(--tk-motion-curve-productive-standard);
+}
+
+.copy-btn:hover {
+  color: var(--tk-color-text-primary);
+  border-color: var(--tk-color-border-strong);
+}
+
+.copy-btn[data-state="copied"] {
+  color: var(--tk-color-text-primary);
+  border-color: var(--tk-color-focus-ring);
+}
+
+/* ── Accordion (§E kit gap — styled <details>) ─────────────────────────── */
+
+.accordion {
+  border: 1px solid var(--tk-color-border-default);
+  border-radius: var(--tk-radius-md);
+  background: var(--tk-color-surface-muted);
+  overflow: hidden;
+}
+
+.accordion + .accordion { margin-top: var(--tk-space-12); }
+
+.accordion summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tk-space-16);
+  min-height: 44px;
+  padding: var(--tk-space-16) var(--tk-space-20);
+  font-family: var(--tk-font-heading);
+  font-size: var(--tk-text-heading-6-size);
+  font-weight: var(--tk-text-heading-6-weight);
+  color: var(--tk-color-text-primary);
+  cursor: pointer;
+  list-style: none;
+}
+
+.accordion summary::-webkit-details-marker { display: none; }
+
+.accordion summary .chev {
+  flex: none;
+  color: var(--tk-color-text-secondary);
+  transition: transform var(--tk-motion-duration-fast) var(--tk-motion-curve-productive-standard);
+}
+
+.accordion[open] summary .chev { transform: rotate(180deg); }
+
+.accordion .accordion-body {
+  padding: 0 var(--tk-space-20) var(--tk-space-20);
+  color: var(--tk-color-text-secondary);
+}
+
+.accordion .accordion-body :first-child { margin-top: 0; }
+.accordion .accordion-body :last-child { margin: 0; }
+
+/* ── Install mini-tree (FR-4.3) ────────────────────────────────────────── */
+
+.tree {
+  margin: 0;
+  padding: var(--tk-space-16) var(--tk-space-20);
+  font-family: var(--tk-font-mono);
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--tk-color-text-secondary);
+  background: var(--tk-color-surface-field);
+  border: 1px solid var(--tk-color-border-default);
+  border-radius: var(--tk-radius-md);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.tree .hl { color: var(--tk-color-text-primary); }   /* paths */
+.tree .dim { color: var(--tk-color-text-muted); }    /* annotations */
+
+/* ── Hero (Home) ───────────────────────────────────────────────────────── */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--tk-space-40);
+  align-items: center;
+  padding-block: var(--tk-space-48) var(--tk-space-64);
+}
+
+.hero .cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--tk-space-16);
+  margin-top: var(--tk-space-24);
+}
+
+@media (max-width: 1023px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-block: var(--tk-space-32) var(--tk-space-48);
+  }
+
+  .hero .orbital-wrap {
+    max-width: 340px;
+    margin-inline: auto;
+  }
+}
+
+/* ── Orbital motif (addendum §H — the ONE expressive motion) ─────────────
+   Arcs draw in once on load (≤700ms total via the slowest token, staggered
+   by the fastest token); nodes pop in after the arcs. All durations come
+   from --tk-motion-* tokens, which collapse to 0 under
+   prefers-reduced-motion — the motif renders fully drawn, no animation. */
+
+.orbital { display: block; width: 100%; height: auto; }
+
+.orbital .arc {
+  fill: none;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: orbital-draw
+    var(--tk-motion-duration-slow, 500ms)
+    var(--tk-motion-curve-expressive-entrance)
+    forwards;
+}
+
+.orbital .arc:nth-of-type(2) { animation-delay: var(--tk-motion-duration-fastest, 75ms); }
+.orbital .arc:nth-of-type(3) { animation-delay: calc(var(--tk-motion-duration-fastest, 75ms) * 2); }
+
+.orbital .node {
+  opacity: 0;
+  transform: scale(0.4);
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: orbital-node
+    var(--tk-motion-duration-moderate, 300ms)
+    var(--tk-motion-curve-expressive-entrance)
+    calc(var(--tk-motion-duration-slow, 500ms) * 0.55)
+    forwards;
+}
+
+@keyframes orbital-draw { to { stroke-dashoffset: 0; } }
+
+@keyframes orbital-node { to { opacity: 1; transform: scale(1); } }
+
+/* ── Loop diagram (FR-3.5) — phase line, node style shared with §H ────── */
+
+.loop {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--tk-space-20);
+  padding-top: var(--tk-space-8);
+}
+
+.loop::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--tk-space-8) + 7px);
+  left: 12.5%;
+  right: 12.5%;
+  height: 2px;
+  background: var(--tk-color-border-strong);
+}
+
+.loop-step { text-align: center; }
+
+.loop-node {
+  position: relative;
+  z-index: 1;
+  width: 16px;
+  height: 16px;
+  margin: 0 auto var(--tk-space-12);
+  border-radius: var(--tk-radius-full);
+  background: var(--tk-color-surface-base);
+  border: 2px solid var(--tk-color-link);
+}
+
+.loop-step h3 {
+  font-size: var(--tk-text-heading-5-size);
+  font-weight: var(--tk-text-heading-5-weight);
+  line-height: var(--tk-text-heading-5-leading);
+  margin-bottom: var(--tk-space-8);
+}
+
+.loop-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--tk-space-8);
+  justify-content: center;
+}
+
+.loop-skills code { white-space: nowrap; }
+
+@media (max-width: 767px) {
+  .loop {
+    grid-template-columns: 1fr;
+    gap: var(--tk-space-24);
+  }
+
+  .loop::before {
+    top: var(--tk-space-8);
+    bottom: var(--tk-space-8);
+    left: 7px;
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+
+  .loop-step {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    gap: var(--tk-space-16);
+    text-align: left;
+  }
+
+  .loop-node { margin: 4px 0 0; }
+}
+
+/* ── Layer diagram (FR-5.1) — vertical stack, static, token-driven ────── */
+
+.layer-stack {
+  max-width: 620px;
+  margin-inline: auto;
+  display: grid;
+  justify-items: stretch;
+}
+
+.layer {
+  padding: var(--tk-space-16) var(--tk-space-20);
+  text-align: center;
+  background: var(--tk-color-surface-field);
+  border: 1px solid var(--tk-color-border-default);
+  border-radius: var(--tk-radius-md);
+}
+
+.layer.is-template {
+  background: var(--tk-color-tint-bluegray);
+  border-color: var(--tk-color-link);
+}
+
+.layer-name {
+  display: block;
+  font-family: var(--tk-font-heading);
+  font-size: var(--tk-text-heading-6-size);
+  font-weight: var(--tk-text-heading-6-weight);
+  color: var(--tk-color-text-primary);
+}
+
+.layer-note {
+  display: block;
+  margin-top: var(--tk-space-4);
+  font-size: var(--tk-text-body-s-size, 13px);
+  color: var(--tk-color-text-muted);
+}
+
+.layer-connector {
+  justify-self: center;
+  width: 2px;
+  height: var(--tk-space-24);
+  background: var(--tk-color-border-strong);
+  position: relative;
+}
+
+.layer-connector::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--tk-color-border-strong);
+  border-bottom: 0;
+}

@@ -29,4 +29,5 @@ jobs:
       - uses: astral-sh/setup-uv@v5
         with:
           python-version: "3.11"
+          enable-cache: false # post-step cache save fails on cacheless runners; job doesn't need it
       - run: make smoke-test

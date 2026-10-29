@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="assets/site.css">
   <script type="module" src="vendor/pillkit-components/tk-components.js"></script>
   <script type="module" src="assets/chrome.js"></script>
+  <script type="module" src="assets/site.js"></script>
 </head>
 <body data-page="home">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -34,13 +35,129 @@
 
   <main id="main" class="page">
     <div class="container">
-      <!-- W1 skeleton — Home composition (FR-3.1…FR-3.5) lands at the
-           h5–6 pass, then Checkpoint C reviews it before mass production. -->
-      <span class="eyebrow">Template</span>
-      <h1>BMad Method in Google Antigravity —<br>pinned, native, one command.</h1>
-      <p class="lead">Clone, run <code>./setup.sh</code>, open Antigravity. You get a
-        pinned BMad&nbsp;6 install, the <code>/bmad-orchestrate</code> plugin, and
-        presets that survive every update.</p>
+
+      <!-- FR-3.1 Hero -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <span class="eyebrow">Template</span>
+          <h1 id="hero-title">BMad Method in Google Antigravity — pinned, native, one&nbsp;command.</h1>
+          <p class="lead">Clone the template, run <code>./setup.sh</code>, open Antigravity.
+            You get a pinned BMad&nbsp;6.12.4 install with native targets, the
+            <code>/bmad-orchestrate</code> plugin, and presets that survive every update.</p>
+          <div class="cta-row">
+            <tk-button variant="primary" href="./quick-start.html">Get started</tk-button>
+            <tk-button variant="secondary" href="https://github.com/salacoste/antigravity-bmad-config" target="_blank" rel="noopener">View on GitHub</tk-button>
+          </div>
+        </div>
+        <div class="orbital-wrap" aria-hidden="true">
+          <!-- Orbital motif (addendum §H): agents orbiting a project core.
+               Decorative only; colors via --tk-* so it themes with the site. -->
+          <svg class="orbital" viewBox="0 0 480 480" focusable="false">
+            <ellipse class="arc" cx="240" cy="240" rx="90"  ry="36" pathLength="100" transform="rotate(-24 240 240)" stroke="var(--tk-color-link)" stroke-width="2"/>
+            <ellipse class="arc" cx="240" cy="240" rx="140" ry="56" pathLength="100" transform="rotate(18 240 240)"  stroke="var(--tk-color-border-strong)" stroke-width="1.5"/>
+            <ellipse class="arc" cx="240" cy="240" rx="186" ry="74" pathLength="100" transform="rotate(-8 240 240)"  stroke="var(--tk-color-border-default)" stroke-width="1.5"/>
+            <circle class="core" cx="240" cy="240" r="26" fill="var(--tk-color-link)"/>
+            <circle class="node" cx="312" cy="233" r="7"   fill="var(--tk-color-link)"/>
+            <circle class="node" cx="164" cy="251" r="5"   fill="var(--tk-color-link)"/>
+            <circle class="node" cx="116" cy="229" r="6"   fill="var(--tk-color-surface-base)" stroke="var(--tk-color-link)" stroke-width="2"/>
+            <circle class="node" cx="353" cy="239" r="5"   fill="var(--tk-color-link)"/>
+            <circle class="node" cx="63"  cy="239" r="6"   fill="var(--tk-color-surface-base)" stroke="var(--tk-color-link)" stroke-width="2"/>
+            <circle class="node" cx="282" cy="308" r="4.5" fill="var(--tk-color-link)"/>
+          </svg>
+        </div>
+      </section>
+
+      <!-- FR-3.2 Why v2 -->
+      <section class="section" aria-labelledby="why-title">
+        <div class="section-head">
+          <span class="eyebrow">Why v2</span>
+          <h2 id="why-title">The pivot, briefly</h2>
+          <p class="lead">Antigravity sunset workflows on 2026-10-19, and BMad&nbsp;6 dropped
+            <code>.bmad-core</code> — the two things the v1 approach stood on. BMad&nbsp;≥&nbsp;6
+            installs its Antigravity targets natively, so a transposition layer became dead
+            weight. This template keeps only what upstream doesn't ship: an orchestrator,
+            presets, and a pin you control. <a href="./migration.html">Migrating from v1&nbsp;→</a></p>
+        </div>
+      </section>
+
+      <!-- FR-3.3 Value cards -->
+      <section class="section" aria-labelledby="value-title">
+        <div class="section-head">
+          <span class="eyebrow">What's inside</span>
+          <h2 id="value-title">Three pieces, one thin layer</h2>
+        </div>
+        <div class="grid cols-3">
+          <tk-promo-card variant="charcoal" heading="Pinned install"
+            description="One command installs bmad-method@6.12.4 with both native Antigravity targets: .agent/skills/ and .agents/skills/. The pin lives in .bmad-version — updates are deliberate.">
+            <div slot="actions"><tk-link href="./quick-start.html" variant="standalone">Quick Start →</tk-link></div>
+          </tk-promo-card>
+          <tk-promo-card variant="charcoal" heading="Orchestrator plugin"
+            description="/bmad-orchestrate routes work across the BMad persona loop (Clarify → Plan → Build → Learn) and detects your artifact state; two rules keep agents out of the runtime directories.">
+            <div slot="actions"><tk-link href="./components.html" variant="standalone">Components →</tk-link></div>
+          </tk-promo-card>
+          <tk-promo-card variant="charcoal" heading="Presets"
+            description="English and Russian team layers land in _bmad/custom/ — the one BMad-owned directory the installer never overwrites. Your config survives every update.">
+            <div slot="actions"><tk-link href="./presets.html" variant="standalone">Presets →</tk-link></div>
+          </tk-promo-card>
+        </div>
+      </section>
+
+      <!-- FR-3.4 Install strip -->
+      <section class="section" aria-labelledby="install-title">
+        <div class="section-head">
+          <span class="eyebrow">Quick start</span>
+          <h2 id="install-title">Three commands</h2>
+        </div>
+        <div class="code-strip">
+          <figure class="code-block">
+            <pre><code>git clone https://github.com/salacoste/antigravity-bmad-config.git my-project</code></pre>
+            <button class="copy-btn" type="button" aria-label="Copy clone command"></button>
+          </figure>
+          <figure class="code-block">
+            <pre><code>cd my-project &amp;&amp; rm -rf .git &amp;&amp; git init</code></pre>
+            <button class="copy-btn" type="button" aria-label="Copy reset command"></button>
+          </figure>
+          <figure class="code-block">
+            <pre><code>./setup.sh <span class="cm"># or: ./setup.sh russian</span></code></pre>
+            <button class="copy-btn" type="button" aria-label="Copy setup command"></button>
+          </figure>
+        </div>
+        <p>Then open the folder in Antigravity and run <code>/bmad-orchestrate</code> —
+          planning artifacts land in <code>_bmad-output/</code>.</p>
+      </section>
+
+      <!-- FR-3.5 The loop -->
+      <section class="section" aria-labelledby="loop-title">
+        <div class="section-head">
+          <span class="eyebrow">The loop</span>
+          <h2 id="loop-title">Clarify → Plan → Build → Learn</h2>
+          <p class="lead">The orchestrator routes work across the BMad persona skills —
+            one loop from idea to retrospective, with artifacts at every phase.</p>
+        </div>
+        <div class="loop">
+          <div class="loop-step">
+            <span class="loop-node" aria-hidden="true"></span>
+            <h3>Clarify</h3>
+            <div class="loop-skills"><code>/bmad-agent-analyst</code><code>/bmad-agent-pm</code></div>
+          </div>
+          <div class="loop-step">
+            <span class="loop-node" aria-hidden="true"></span>
+            <h3>Plan</h3>
+            <div class="loop-skills"><code>/bmad-agent-ux-designer</code><code>/bmad-agent-architect</code></div>
+          </div>
+          <div class="loop-step">
+            <span class="loop-node" aria-hidden="true"></span>
+            <h3>Build</h3>
+            <div class="loop-skills"><code>/bmad-agent-dev</code></div>
+          </div>
+          <div class="loop-step">
+            <span class="loop-node" aria-hidden="true"></span>
+            <h3>Learn</h3>
+            <div class="loop-skills"><code>/bmad-review</code><code>/bmad-retrospective</code></div>
+          </div>
+        </div>
+      </section>
+
     </div>
   </main>
 
